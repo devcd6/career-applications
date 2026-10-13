@@ -9,7 +9,7 @@ BUILD = ROOT / "scripts" / "build_interview_packet.py"
 CHECK = ROOT / "scripts" / "check_interview_packet.py"
 
 FILES = {
-    "jd.md": "# Coordinator\nSupport programs.\n",
+    "jd.md": "# Coordinator\n## Requirements\nSupport programs.\n",
     "resume.md": "# Devika C. Dixit\n- Managed member communications.\n",
     "claims-used.md": "- Managed comms | A-ncmw-project-coordinator-24 | consistent | Managed\n"
     "- Other | A-ncmw-project-coordinator-19, A-ncmw-project-coordinator-24 | verified | Organized\n",
