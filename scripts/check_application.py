@@ -3,7 +3,7 @@
 
 Usage:
     python scripts/check_application.py applications/<slug>
-    python scripts/check_application.py applications/<slug> --claims kb/_views/claims.md
+    python scripts/check_application.py applications/<slug> --claims <application-facts.md>
 
 Errors (exit 1):
   provenance   a number in resume.md or cover-letter.md not in any claim's metrics; for resume bullets, not in the metrics of the claim(s) the bullet maps to
@@ -219,8 +219,6 @@ def main():
     claims_path = Path(a.claims) if a.claims else folder / "application-facts.md"
     if not claims_path.exists() and (folder / "claims-packet.md").exists():
         claims_path = folder / "claims-packet.md"
-    if not claims_path.exists() and (ROOT / "kb" / "_views" / "claims.md").exists():
-        claims_path = ROOT / "kb" / "_views" / "claims.md"
     if not claims_path.exists():
         print(f"no application-facts packet found: {claims_path}")
         return 2
