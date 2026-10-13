@@ -1,0 +1,309 @@
+{
+  "title": "Claims used: United Way of Tarrant County, Community Investment Programs Assistant",
+  "summary": "Program coordinator with 4+ years supporting national association, human services, healthcare, and nonprofit initiatives, skilled in committee and meeting support, grant reporting and tracking, partner and resource coordination, and volunteer and event logistics. Background spans a leading behavioral health membership association, housing and community systems coordination with local partner agencies, and academic research administration, building broad fluency in stakeholder communications, program operations, and careful stewardship of sensitive information. Skilled in meeting documentation and action-item tracking, database and shared-drive maintenance, and drafting newsletters, reports, and presentations for funders, partner organizations, and leadership. Proficient in Microsoft Office, project management software, and CRM platforms, with a track record of quickly mastering new systems and producing timely, accurate work under deadline pressure. Committed to advancing equitable access to human services and community resources through adaptable, detail-oriented coordination that connects local agencies, volunteers, and neighbors to the support they need.",
+  "skills": [
+    "**Program & Event Coordination:** Multi-workstream project coordination, full project lifecycle management, deliverable and milestone tracking, virtual and in-person meeting facilitation, end-to-end conference and event logistics at national scale, presenter and speaker outreach and prep coordination, virtual platform setup and technical support, work group and advisory committee facilitation, executive calendar management with travel and hotel logistics",
+    "**Membership & Stakeholder Management:** Primary liaison functions across multi-stakeholder environments, member-facing communications and constituent services, cross-sector partnership coordination and follow-through, vendor communication and compliance assessment, donor and funder stewardship",
+    "**Communications & Marketing:** Multi-channel content strategy (LinkedIn, Facebook, Instagram, X), email marketing and audience segmentation (Mailchimp), newsletter production and editorial management (8,000+ subscribers), SEO-optimized copywriting, web content management (Wix, Squarespace CMS), brand identity and style guide development, Adobe Creative Suite (Photoshop, Illustrator, InDesign), Canva design production",
+    "**Reporting & Documentation:** Report development for sponsors, grantors, members, and advisory and steering committees, structured-cadence status reporting, quality control and deliverable review, database input, update, and extraction, audit-ready documentation",
+    "**Research & Program Evaluation:** Environmental and horizon scanning, program evaluation framework design, KPI structuring and tracking, findings translation for leadership and non-technical audiences",
+    "**Tools & Platforms:** Microsoft Office 365 (Word, Excel, PowerPoint, Outlook), Google Workspace, Asana, Airtable, SharePoint, OneDrive, Zoom, Salesforce (including Nonprofit Success Pack), HubSpot CRM, Canva, Adobe Creative Suite, Wix, Squarespace, Mailchimp, Jotform, SurveyMonkey"
+  ],
+  "roles": {
+    "ncmw-project-coordinator": [
+      {
+        "claims": [
+          1
+        ],
+        "verb": "Managed",
+        "pick": {
+          "0": 1
+        }
+      },
+      {
+        "claims": [
+          18
+        ],
+        "verb": "Served",
+        "pick": {
+          "0": 1
+        }
+      },
+      {
+        "claims": [
+          119,
+          19
+        ],
+        "verb": "Facilitated"
+      },
+      {
+        "claims": [
+          17
+        ],
+        "verb": "Prepared"
+      },
+      {
+        "claims": [
+          9
+        ],
+        "verb": "Designed"
+      },
+      {
+        "claims": [
+          53
+        ],
+        "verb": "Processed"
+      },
+      {
+        "claims": [
+          12
+        ],
+        "verb": "Built"
+      },
+      {
+        "claims": [
+          14
+        ],
+        "verb": "Maintained"
+      },
+      {
+        "claims": [
+          85
+        ],
+        "verb": "Developed"
+      },
+      {
+        "claims": [
+          30,
+          27
+        ],
+        "verb": "Recruited"
+      },
+      {
+        "claims": [
+          101,
+          24
+        ],
+        "verb": "Delivered"
+      },
+      {
+        "claims": [
+          98
+        ],
+        "verb": "Coordinated"
+      },
+      {
+        "claims": [
+          73
+        ],
+        "verb": "Applied"
+      },
+      {
+        "claims": [
+          49
+        ],
+        "verb": "Conducted"
+      }
+    ],
+    "ucsb-research-assistant": [
+      {
+        "claims": [
+          24
+        ],
+        "verb": "Prepared"
+      },
+      {
+        "claims": [
+          23
+        ],
+        "verb": "Developed"
+      },
+      {
+        "claims": [
+          9
+        ],
+        "verb": "Maintained",
+        "pick": {
+          "0": -1
+        }
+      },
+      {
+        "claims": [
+          3
+        ],
+        "verb": "Served"
+      },
+      {
+        "claims": [
+          7
+        ],
+        "verb": "Led"
+      },
+      {
+        "claims": [
+          18
+        ],
+        "verb": "Collected"
+      },
+      {
+        "claims": [
+          17
+        ],
+        "verb": "Assisted"
+      },
+      {
+        "claims": [
+          26
+        ],
+        "verb": "Provided"
+      }
+    ],
+    "sanctuary-centers-housing-coordinator": [
+      {
+        "claims": [
+          9
+        ],
+        "verb": "Served"
+      },
+      {
+        "claims": [
+          35
+        ],
+        "verb": "Supported"
+      },
+      {
+        "claims": [
+          12
+        ],
+        "verb": "Scheduled"
+      },
+      {
+        "claims": [
+          18
+        ],
+        "verb": "Co-facilitated"
+      },
+      {
+        "claims": [
+          20
+        ],
+        "verb": "Recruited",
+        "pick": {
+          "0": 0
+        }
+      },
+      {
+        "claims": [
+          19
+        ],
+        "verb": "Partnered",
+        "pick": {
+          "0": 0
+        }
+      },
+      {
+        "claims": [
+          13
+        ],
+        "verb": "Maintained"
+      },
+      {
+        "claims": [
+          15
+        ],
+        "verb": "Coordinated"
+      },
+      {
+        "claims": [
+          16
+        ],
+        "verb": "Designed"
+      },
+      {
+        "claims": [
+          32
+        ],
+        "verb": "Translated"
+      }
+    ],
+    "asei-marketing-specialist": [
+      {
+        "claims": [
+          22
+        ],
+        "verb": "Coordinated"
+      },
+      {
+        "claims": [
+          28
+        ],
+        "verb": "Built"
+      },
+      {
+        "claims": [
+          29
+        ],
+        "verb": "Maintained"
+      },
+      {
+        "claims": [
+          14
+        ],
+        "verb": "Managed"
+      },
+      {
+        "claims": [
+          2
+        ],
+        "verb": "Developed"
+      },
+      {
+        "claims": [
+          21
+        ],
+        "verb": "Created"
+      },
+      {
+        "claims": [
+          6
+        ],
+        "verb": "Designed"
+      }
+    ],
+    "casa-serena-program-assistant": [
+      {
+        "claims": [
+          13
+        ],
+        "verb": "Served"
+      },
+      {
+        "claims": [
+          14
+        ],
+        "pick": {
+          "0": 0
+        },
+        "verb": "Participated"
+      },
+      {
+        "claims": [
+          15
+        ],
+        "verb": "Coordinated"
+      },
+      {
+        "claims": [
+          28
+        ],
+        "verb": "Monitored"
+      },
+      {
+        "claims": [
+          20
+        ],
+        "verb": "Maintained"
+      }
+    ]
+  }
+}

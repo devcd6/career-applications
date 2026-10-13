@@ -1,0 +1,27 @@
+---
+id: cover-letter_public-health-multistakeholder-coordination
+type: cover-letter
+role_angle: public-health-multistakeholder-coordination
+date: 2026-09
+date_confidence: content
+status: active
+source_original: _raw/notion/documents/N-L03.md
+notes: Cover letter from the Notion workspace export, body kept verbatim except the Notion property lines, page title, recipient block and salutation (made generic, 2026-10-08); writing-style sample; date is a lower bound
+---
+
+Dear Hiring Manager,
+
+Public health data has never been more abundant, yet a governor confronting an outbreak, a vaccine shortfall, or an emerging health threat often has no reliable way to learn what a neighboring state has already tried. That gap is rarely a shortage of evidence. It is a structural lack of communication between states solving overlapping versions of the same problem in isolation. The Governors Public Health Alliance, building the infrastructure for governors to share data, align responses, and coordinate directly across state lines instead of treating collaboration as an afterthought to each state's own planning, is the clearest example I have seen of a coalition building that lesson into its actual structure rather than leaving it to circumstance. That is exactly the kind of work I have spent my career doing in different forms, and it is why I am applying for the Program Associate role with the Alliance.
+
+That understanding became concrete at Sanctuary Centers, where I coordinated housing placement for a caseload of 20 to 30 adults navigating serious mental illness, co-occurring substance use, and complex trauma. Each subsidy program, Section 8, HUD-VASH, Emergency Housing Vouchers, carried its own documentation standards, timelines, and eligibility criteria, and none of them were built to talk to each other. Designing a standardized checklist system that could move a single client through all five programs at once was not a paperwork fix. It was a recognition that the resources these clients needed already existed, just scattered across offices that had never been asked to coordinate. When a regional voucher shortage hit during my tenure, that same fragmentation nearly cost people their housing, and coordinating in real time across state, county, and partner agencies secured emergency placements for every affected client without a single loss. Systems built in isolation from each other cost real people real time.
+
+That instinct carried into research at UC Santa Barbara, where I coordinated participant recruitment and data collection across three concurrent communication labs studying family mental health, political persuasion, and media effects. Recruiting demographically diverse participants, including Black, Latinx, Asian, and multiethnic communities not typically reached through standard academic pipelines, taught me that a single methodology rarely travels intact from one population to the next. An approach that built trust with one family could feel intrusive to another. Good research meant tailoring the approach to the context, not the reverse. That is the same discipline a fifteen-state coalition needs at a much larger scale: the same public health priority can need a different point of entry in every statehouse it reaches.
+
+That principle scaled at the National Council for Mental Wellbeing, where I coordinated six or more concurrent grant-funded workstreams for a 3,200-member national association, sitting between federal partners like SAMHSA, CDC, and CMS and the clinicians and executives who needed to act on what those partners produced. I noticed early that a finding written for a federal official and the same finding written for a frontline partner are two different documents, and built the systems that kept that translation work from depending on any one person's memory: centralized deliverable tracking across a half dozen platforms, a shared grant content library that cut recurring submission time by roughly half, and a monthly newsletter that turned federal policy actions into content 8,000 subscribers could actually use. None of that work was glamorous. All of it was the scaffolding that let subject-matter experts stay focused on their expertise instead of chasing deadlines and version control. That is the role I understand myself to be best suited for, not setting the policy agenda, but building and holding the structure underneath it so the people setting that agenda can move faster.
+
+I want to be direct about one thing. My background is in behavioral health policy and housing systems, not state government or a governor's office directly, and I do not want to overstate that. What I bring instead is four years of learning, in three different settings, that the hardest part of this kind of work is rarely the absence of knowledge. It is the absence of a structure that lets people move that knowledge across whatever border, agency, or discipline currently sits in the way. I would rather learn a governor's office's specific rhythms from the team already doing that work than assume my adjacent experience translates without adjustment.
+
+The path from direct service, to research, to national coordination has taught me the same thing three different ways. The willingness to coordinate across state lines is rarely the hard part. What decides whether it holds is whether someone is doing the quiet, deadline-driven work of keeping fifteen offices moving at the same speed. I would welcome the opportunity to bring that work to the Alliance.
+
+Sincerely,
+Devika C. Dixit

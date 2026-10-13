@@ -1,0 +1,313 @@
+{
+  "title": "Claims used: AAMC, Program and Member Engagement Specialist, International",
+  "summary": "Program coordinator with 4+ years supporting national association, healthcare, and nonprofit initiatives, skilled in event and webinar logistics, membership communications, deliverable tracking, and stakeholder reporting. Background spans a leading behavioral health membership association, statewide housing and community systems coordination, and academic research administration, building broad fluency in stakeholder communications, program operations, and careful stewardship of sensitive information. Skilled in executive calendar management, meeting documentation and action-item tracking, and drafting newsletters, briefs, and communications for federal agencies, partner organizations, and funders. Proficient in project management software, Adobe Creative Suite, Microsoft Office, CRM platforms, and Zoom, with a track record of quickly mastering new systems and producing timely, accurate work under deadline pressure. Committed to advancing collaboration among member institutions through reliable program coordination and responsive member engagement that supports the health of the communities they serve.",
+  "skills": [
+    "**Program & Event Coordination:** Multi-workstream project coordination, full project lifecycle management, deliverable and milestone tracking, virtual and in-person meeting facilitation, end-to-end conference and event logistics at national scale, presenter and speaker outreach and prep coordination, virtual platform setup and technical support, work group and advisory committee facilitation, executive calendar management with travel and hotel logistics",
+    "**Membership & Stakeholder Management:** Primary liaison functions across multi-stakeholder environments, member-facing communications and constituent services, cross-sector partnership coordination and follow-through, vendor communication and compliance assessment, donor and funder stewardship",
+    "**Communications & Marketing:** Multi-channel content strategy (LinkedIn, Facebook, Instagram, X), email marketing and audience segmentation (Mailchimp), newsletter production and editorial management (8,000+ subscribers), SEO-optimized copywriting, web content management (Wix, Squarespace CMS), brand identity and style guide development, Adobe Creative Suite (Photoshop, Illustrator, InDesign), Canva design production",
+    "**Reporting & Documentation:** Report development for sponsors, grantors, members, and advisory and steering committees, structured-cadence status reporting, quality control and deliverable review, database input, update, and extraction, audit-ready documentation",
+    "**Research & Program Evaluation:** Environmental and horizon scanning, program evaluation framework design, KPI structuring and tracking, findings translation for leadership and non-technical audiences",
+    "**Tools & Platforms:** Microsoft Office 365 (Word, Excel, PowerPoint, Outlook), Google Workspace, Asana, Airtable, SharePoint, OneDrive, Zoom, Salesforce (including Nonprofit Success Pack), HubSpot CRM, Canva, Adobe Creative Suite, Wix, Squarespace, Mailchimp, Jotform, SurveyMonkey"
+  ],
+  "roles": {
+    "ncmw-project-coordinator": [
+      {
+        "claims": [
+          18
+        ],
+        "pick": {
+          "0": 1
+        },
+        "verb": "Served"
+      },
+      {
+        "claims": [
+          27
+        ],
+        "verb": "Delivered"
+      },
+      {
+        "claims": [
+          30,
+          27
+        ],
+        "verb": "Recruited"
+      },
+      {
+        "claims": [
+          35
+        ],
+        "verb": "Assisted"
+      },
+      {
+        "claims": [
+          98
+        ],
+        "verb": "Coordinated"
+      },
+      {
+        "claims": [
+          97
+        ],
+        "verb": "Moderated"
+      },
+      {
+        "claims": [
+          19
+        ],
+        "verb": "Organized"
+      },
+      {
+        "claims": [
+          85
+        ],
+        "verb": "Developed"
+      },
+      {
+        "claims": [
+          24
+        ],
+        "verb": "Managed"
+      },
+      {
+        "claims": [
+          77
+        ],
+        "verb": "Authored"
+      },
+      {
+        "claims": [
+          82
+        ],
+        "pick": {
+          "0": 1
+        },
+        "verb": "Partnered"
+      },
+      {
+        "claims": [
+          14
+        ],
+        "verb": "Maintained"
+      },
+      {
+        "claims": [
+          11
+        ],
+        "verb": "Standardized"
+      },
+      {
+        "claims": [
+          95
+        ],
+        "verb": "Designed"
+      }
+    ],
+    "ucsb-research-assistant": [
+      {
+        "claims": [
+          3
+        ],
+        "verb": "Served"
+      },
+      {
+        "claims": [
+          9
+        ],
+        "pick": {
+          "0": -1
+        },
+        "verb": "Maintained"
+      },
+      {
+        "claims": [
+          10
+        ],
+        "verb": "Identified"
+      },
+      {
+        "claims": [
+          24
+        ],
+        "verb": "Prepared"
+      },
+      {
+        "claims": [
+          23
+        ],
+        "verb": "Developed"
+      },
+      {
+        "claims": [
+          27
+        ],
+        "verb": "Supported"
+      },
+      {
+        "claims": [
+          18
+        ],
+        "verb": "Collected"
+      },
+      {
+        "claims": [
+          7
+        ],
+        "verb": "Led"
+      }
+    ],
+    "sanctuary-centers-housing-coordinator": [
+      {
+        "claims": [
+          9
+        ],
+        "verb": "Served"
+      },
+      {
+        "claims": [
+          12
+        ],
+        "verb": "Scheduled"
+      },
+      {
+        "claims": [
+          18
+        ],
+        "verb": "Co-facilitated"
+      },
+      {
+        "claims": [
+          20
+        ],
+        "pick": {
+          "0": 0
+        },
+        "verb": "Recruited"
+      },
+      {
+        "claims": [
+          19
+        ],
+        "pick": {
+          "0": 0
+        },
+        "verb": "Partnered"
+      },
+      {
+        "claims": [
+          16
+        ],
+        "verb": "Designed"
+      },
+      {
+        "claims": [
+          17
+        ],
+        "verb": "Identified"
+      },
+      {
+        "claims": [
+          33
+        ],
+        "verb": "Established"
+      },
+      {
+        "claims": [
+          32
+        ],
+        "verb": "Translated"
+      },
+      {
+        "claims": [
+          25
+        ],
+        "verb": "Coordinated"
+      },
+      {
+        "claims": [
+          13
+        ],
+        "verb": "Maintained"
+      }
+    ],
+    "asei-marketing-specialist": [
+      {
+        "claims": [
+          26
+        ],
+        "verb": "Coordinated"
+      },
+      {
+        "claims": [
+          27
+        ],
+        "verb": "Supported"
+      },
+      {
+        "claims": [
+          6
+        ],
+        "verb": "Designed"
+      },
+      {
+        "claims": [
+          2
+        ],
+        "verb": "Developed"
+      },
+      {
+        "claims": [
+          14
+        ],
+        "verb": "Managed"
+      },
+      {
+        "claims": [
+          31
+        ],
+        "verb": "Directed"
+      },
+      {
+        "claims": [
+          28
+        ],
+        "verb": "Built"
+      }
+    ],
+    "casa-serena-program-assistant": [
+      {
+        "claims": [
+          13
+        ],
+        "verb": "Served"
+      },
+      {
+        "claims": [
+          14
+        ],
+        "pick": {
+          "0": 0
+        },
+        "verb": "Participated"
+      },
+      {
+        "claims": [
+          15
+        ],
+        "verb": "Coordinated"
+      },
+      {
+        "claims": [
+          28
+        ],
+        "verb": "Monitored"
+      },
+      {
+        "claims": [
+          20
+        ],
+        "verb": "Maintained"
+      }
+    ]
+  }
+}

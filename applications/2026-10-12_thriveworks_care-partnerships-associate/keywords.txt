@@ -1,0 +1,35 @@
+Title Keyword | Care Partnerships Associate
+Title Keyword | Associate
+Hard Skill | Salesforce
+Hard Skill | CRM
+Hard Skill | dashboards
+Hard Skill | referral data
+Hard Skill | account and activity information
+Hard Skill | outbound outreach
+Hard Skill | relationship-building
+Hard Skill | problem-solving
+Action Keyword | Manage
+Action Keyword | Develop
+Action Keyword | Educate
+Action Keyword | Prioritize
+Action Keyword | Collaborate
+Action Keyword | Research
+Action Keyword | Identify
+Business Context | referral partners
+Business Context | referral partnerships
+Business Context | referral pathways
+Business Context | referral process
+Business Context | Patient Referral Dashboard
+Business Context | trusted point of contact
+Business Context | follow-through
+Business Context | healthcare organizations
+Business Context | territory
+Business Context | fast-paced
+Domain Keyword | behavioral healthcare
+Domain Keyword | mental healthcare
+Domain Keyword | health systems
+Domain Keyword | access
+Domain Keyword | insurance
+Hard Filter | 2–5 years of experience
+Hard Filter | Bachelor's degree
+Forced | Salesforce

@@ -1,0 +1,30 @@
+---
+id: cover-letter_administrative-program-coordination
+type: cover-letter
+role_angle: administrative-program-coordination
+date: 2026-09
+date_confidence: content
+status: active
+source_original: _raw/notion/documents/N-L10.md
+notes: Cover letter from the Notion workspace export, body kept verbatim except the Notion property lines, page title, recipient block and salutation (made generic, 2026-10-08); writing-style sample; date is a lower bound
+---
+
+September 8, 2026
+
+Dear Hiring Manager,
+
+Nearly ninety percent of pediatric oncology specialists do not know that pesticides, traffic pollution, and other environmental exposures are linked to childhood cancer risk, and even the minority who do still rarely feel equipped to answer a parent's question about it in an exam room. That gap is not a shortage of evidence. Twenty-five years of research have built a growing case for environmental contributors to childhood cancer. What is missing is a structure that moves that evidence out of journals and cooperative agreements and into the hands of the clinicians and families who need it. The Childhood Cancer and the Environment Program, working through a network of ten regional PEHSUs that PHI coordinates nationally for CDC/ATSDR and EPA, is built around closing exactly that gap, training oncology fellows, nurse practitioners, and community health workers to carry that evidence into everyday practice rather than leaving it to sit in the literature. That is the kind of work I have spent my career doing in different domains, and it is why I am applying for the Program Coordinator/Administrative Coordinator role.
+
+That kind of gap became concrete at Sanctuary Centers, where I coordinated housing placement for a caseload of 20 to 30 adults navigating serious mental illness, co-occurring substance use, and complex trauma. Each subsidy program, Section 8, HUD-VASH, Emergency Housing Vouchers, carried its own documentation standards and eligibility timelines, and none of them were built to talk to each other. Designing a standardized checklist system that could move a single client through all five programs at once was a recognition that the resources these clients needed already existed, just scattered across offices that had never been asked to coordinate. When a regional voucher shortage hit during my tenure, that same fragmentation nearly cost people their housing, and coordinating in real time across state, county, and partner agencies secured emergency placements for every affected client without a single loss. Systems built in isolation from each other cost real people real time, whether the resource in question is a housing voucher or a piece of clinical guidance a family needed months earlier.
+
+That instinct carried into research at UC Santa Barbara, where I coordinated participant recruitment and data collection across three concurrent communication labs studying family mental health, political persuasion, and media effects. Recruiting demographically diverse participants, including Black, Latinx, Asian, and multiethnic communities not typically reached through standard academic pipelines, taught me that a single methodology rarely travels intact from one population to the next. An interview approach that built trust with one family could feel intrusive to another. Good research meant tailoring the approach to the context, not the reverse, which is the same discipline CCEP's mission depends on: the same environmental health message lands differently for a pediatric oncologist reading a clinical brief than for a parent hearing it for the first time after a diagnosis.
+
+That principle scaled at the National Council for Mental Wellbeing, where I coordinated six or more concurrent grant-funded workstreams for a 3,200-member national association, sitting between federal partners like SAMHSA, CDC, and CMS and the clinicians who needed to act on what those partners produced. I built the systems that kept that translation work from depending on any one person's memory: a centralized grant content library that cut recurring submission time by roughly half, event logistics for an 18-session national conference track drawing 6,000 attendees, and a monthly newsletter that turned federal policy actions into content 8,000 subscribers could use. I also authored a 12-module e-learning course from architecture through launch, building the accessible visual assets and instructional video content myself to meet Section 508 and WCAG standards, the same standards CCEP's own webinars and digital materials are built to meet. None of that work was glamorous. All of it was the scaffolding that let subject-matter experts, the physicians and researchers carrying the science, stay focused on their expertise instead of chasing budgets, deadlines, and version control.
+
+I want to be direct about one thing. My background is in behavioral health policy and housing systems, not environmental health or pediatric oncology, and I do not want to overstate what that experience has taught me about the specific science CCEP's network carries. What it has given me is four years of learning, in three different settings, that the hardest part of this kind of work is building the structure that lets existing knowledge move: a budget tracked correctly, a training scheduled and staffed, a piece of content built to reach the person who needs it. I would rather learn the specific rhythms of the PEHSU network and CCEP's clinical partners from the team already doing that work than assume my adjacent experience translates without adjustment.
+
+The path from direct service, to research, to national program coordination has taught me the same thing three different ways. Closing the gap between what the evidence says and what a family or clinician receives is the quiet, deadline-driven work of keeping budgets, events, and content moving at the speed the mission requires. I would welcome the opportunity to bring that work to the PEHSU National Program Office and CCEP.
+
+Sincerely,
+
+**Devika C. Dixit**

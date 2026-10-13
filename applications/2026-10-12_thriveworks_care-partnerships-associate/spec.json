@@ -1,0 +1,278 @@
+{
+ "title": "Claims used: Thriveworks, Care Partnerships Associate",
+ "summary": "Program coordinator with 4+ years supporting national association, healthcare, and nonprofit initiatives, skilled in event and webinar logistics, membership communications, deliverable tracking, and stakeholder reporting. Directly supported federal benefits and housing-subsidy clients through structured intake, documentation, and consistent follow-through. Proficient in project management software, Microsoft Office, CRM platforms, and Zoom, with a track record of quickly mastering new systems and producing timely, accurate work under deadline pressure. Committed to expanding access to quality behavioral health care through trusted, data-informed partner relationships that help patients reach the right care sooner.",
+ "skills": [
+  "**Partner & Stakeholder Engagement:** Primary liaison functions across multi-stakeholder environments, member-facing communications and constituent services, cross-sector partnership coordination and follow-through, presenter and speaker outreach and prep coordination, donor and funder stewardship",
+  "**CRM & Data:** Salesforce (including Nonprofit Success Pack), HubSpot CRM, Airtable, database input, update, and extraction, KPI structuring and tracking, program evaluation framework design, audit-ready documentation",
+  "**Program & Event Coordination:** Multi-workstream project coordination, deliverable and milestone tracking, virtual and in-person meeting facilitation, end-to-end conference and event logistics at national scale, virtual platform setup and technical support",
+  "**Behavioral Health Context:** Motivational Interviewing (OARS), trauma-informed care, HIPAA and 42 CFR Part 2 compliance, HMIS, Kipu and Alleva EMR",
+  "**Tools & Platforms:** Microsoft Office 365 (Word, Excel, PowerPoint, Outlook), Google Workspace, Asana, Airtable, SharePoint, OneDrive, Zoom, Microsoft Teams, Salesforce (including Nonprofit Success Pack), HubSpot CRM, Mailchimp, Jotform, SurveyMonkey"
+ ],
+ "roles": {
+  "ncmw-project-coordinator": [
+   {
+    "claims": [
+     24
+    ],
+    "verb": "Managed"
+   },
+   {
+    "claims": [
+     30,
+     27
+    ],
+    "verb": "Recruited"
+   },
+   {
+    "claims": [
+     27
+    ],
+    "verb": "Delivered"
+   },
+   {
+    "claims": [
+     104,
+     2
+    ],
+    "verb": "Triaged"
+   },
+   {
+    "claims": [
+     97
+    ],
+    "verb": "Moderated"
+   },
+   {
+    "claims": [
+     98
+    ],
+    "verb": "Coordinated"
+   },
+   {
+    "claims": [
+     106,
+     19
+    ],
+    "verb": "Aligned"
+   },
+   {
+    "claims": [
+     19
+    ],
+    "verb": "Organized"
+   },
+   {
+    "claims": [
+     82
+    ],
+    "pick": {
+     "0": 1
+    },
+    "verb": "Partnered"
+   },
+   {
+    "claims": [
+     41
+    ],
+    "verb": "Served"
+   },
+   {
+    "claims": [
+     46
+    ],
+    "verb": "Maintained"
+   },
+   {
+    "claims": [
+     48
+    ],
+    "verb": "Supported"
+   },
+   {
+    "claims": [
+     73
+    ],
+    "verb": "Applied"
+   }
+  ],
+  "sanctuary-centers-housing-coordinator": [
+   {
+    "claims": [
+     9
+    ],
+    "verb": "Served"
+   },
+   {
+    "claims": [
+     7
+    ],
+    "verb": "Navigated"
+   },
+   {
+    "claims": [
+     34
+    ],
+    "verb": "Acted"
+   },
+   {
+    "claims": [
+     35
+    ],
+    "verb": "Supported"
+   },
+   {
+    "claims": [
+     19
+    ],
+    "verb": "Partnered"
+   },
+   {
+    "claims": [
+     32
+    ],
+    "verb": "Translated"
+   },
+   {
+    "claims": [
+     33
+    ],
+    "verb": "Established"
+   },
+   {
+    "claims": [
+     13
+    ],
+    "verb": "Maintained"
+   },
+   {
+    "claims": [
+     21
+    ],
+    "pick": {
+     "0": 1
+    },
+    "verb": "Managed"
+   },
+   {
+    "claims": [
+     23
+    ],
+    "verb": "Achieved"
+   }
+  ],
+  "ucsb-research-assistant": [
+   {
+    "claims": [
+     1
+    ],
+    "verb": "Coordinated"
+   },
+   {
+    "claims": [
+     3
+    ],
+    "verb": "Served"
+   },
+   {
+    "claims": [
+     7
+    ],
+    "verb": "Led"
+   },
+   {
+    "claims": [
+     8
+    ],
+    "verb": "Developed"
+   },
+   {
+    "claims": [
+     31
+    ],
+    "verb": "Built"
+   },
+   {
+    "claims": [
+     18
+    ],
+    "verb": "Collected"
+   }
+  ],
+  "asei-marketing-specialist": [
+   {
+    "claims": [
+     4
+    ],
+    "verb": "Developed"
+   },
+   {
+    "claims": [
+     6
+    ],
+    "verb": "Designed"
+   },
+   {
+    "claims": [
+     28
+    ],
+    "verb": "Built"
+   },
+   {
+    "claims": [
+     30
+    ],
+    "verb": "Deployed"
+   },
+   {
+    "claims": [
+     20
+    ],
+    "verb": "Managed"
+   },
+   {
+    "claims": [
+     1
+    ],
+    "pick": {
+     "0": -1
+    },
+    "verb": "Served"
+   }
+  ],
+  "casa-serena-program-assistant": [
+   {
+    "claims": [
+     17
+    ],
+    "verb": "Supported"
+   },
+   {
+    "claims": [
+     15
+    ],
+    "verb": "Coordinated"
+   },
+   {
+    "claims": [
+     13
+    ],
+    "verb": "Served"
+   },
+   {
+    "claims": [
+     12
+    ],
+    "verb": "Stabilized"
+   },
+   {
+    "claims": [
+     22
+    ],
+    "pick": {
+     "0": -1
+    },
+    "verb": "Maintained"
+   }
+  ]
+ }
+}

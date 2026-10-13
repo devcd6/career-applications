@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(/applications/*/application-facts.md)",
+      "Edit(/applications/preferences.md)",
+      "Edit(/applications/profile-insights.md)",
+      "Edit(/writing/**)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/session_start_handoff.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}
