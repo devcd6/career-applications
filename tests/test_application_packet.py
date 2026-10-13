@@ -118,6 +118,18 @@ class ApplicationPacketTests(unittest.TestCase):
 
             self.assertIn("0 error(s)", result.stdout)
 
+    def test_application_checker_fails_without_facts_packet(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            folder = Path(temp_dir) / "application"
+            folder.mkdir()
+            (folder / "resume.md").write_text("## SUMMARY\n\nText.\n", encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(CHECK_SCRIPT), str(folder)],
+                cwd=ROOT, capture_output=True, text=True, check=False,
+            )
+            self.assertNotEqual(0, result.returncode)
+            self.assertIn("no application-facts packet found", result.stdout)
+
     def test_basic_company_research_needs_no_career_kb_context(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             folder = Path(temp_dir) / "application"
