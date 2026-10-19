@@ -1,6 +1,6 @@
 # Plan: general CV for Dr. Candice Presseau (no specific job)
 
-Status: awaiting owner approval. Nothing built yet.
+Status: approved by owner 2026-10-19 with edits (publication yes, Veterans line, UCSB title, chronological, all standard sections). resume.md built.
 
 Facts: all 259 claims, all degrees, certifications and publication from `application-facts.md` (read-only). Summary S-03 only. No skills list or rulings were selected, so the Skills section draws only on claim wording unless you add them.
 
