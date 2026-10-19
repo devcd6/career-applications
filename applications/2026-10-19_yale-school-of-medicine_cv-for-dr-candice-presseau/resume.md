@@ -45,8 +45,7 @@ Housing Case Manager
 Santa Barbara, CA  Sep 2022 - Nov 2023
 
 - Provided intensive Housing First case management to a concurrent caseload of 20-30 adults with serious mental illness, co-occurring substance use disorder, and complex trauma histories experiencing homelessness or housing insecurity
-- Served a Veteran client base through HUD-VASH and related programs, navigating VA benefits and eligibility for services on behalf of Veteran clients
-- Partnered with the VA and other veterans services on behalf of Veteran clients and collaborated on the sharing of VA client information with general SUD and social services programs
+- Served a Veteran client base through HUD-VASH and related programs, partnering with the VA and other veterans services to navigate VA benefits and eligibility for services on behalf of clients and collaborating on the sharing of VA client information with general SUD and social services programs
 - Navigated four concurrent federal, state, and local housing subsidy programs, including Section 8 Housing Choice Vouchers, Project-Based Vouchers, HUD-VASH, and Emergency Housing Vouchers, managing distinct documentation requirements, timelines, and eligibility criteria for each
 - Applied Motivational Interviewing (OARS), trauma-informed care, and harm reduction frameworks across all client engagements
 - Led clients through SSI and SSDI applications, conducting intake interviews and clinical assessments to evaluate eligibility likelihood and filing appeals and preparing clients for hearings when applications were denied
