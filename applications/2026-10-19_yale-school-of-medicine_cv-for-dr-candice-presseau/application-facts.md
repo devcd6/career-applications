@@ -780,6 +780,10 @@ metrics: [50+ external engagements]
 canonical: Kept an internal administrative record of travel and logistics changes separate from the information shared with travelers and meeting participants, limiting sensitive personal or logistical details in widely accessible task descriptions and meeting invitations, and checking recipients and document-sharing permissions
 metrics: []
 
+### A-ncmw-project-coordinator-128 | single-source
+canonical: Collaborated with veteran-led ibogaine advocacy groups, such as Americans for Ibogaine
+metrics: []
+
 ## sanctuary-centers-housing-coordinator
 employer: Sanctuary Centers (via United Way)
 title: Housing Case Manager | Housing & Basic Needs Services Coordinator
@@ -933,6 +937,18 @@ metrics:
 ### A-sanctuary-centers-housing-coordinator-37 | verified
 canonical: Strengthened integrated treatment planning by facilitating case-conference scheduling, agendas, and action-item follow-through with clinical and medical partners.
 metrics: 
+
+### A-sanctuary-centers-housing-coordinator-38 | single-source
+canonical: Served a Veteran client base, navigating VA benefits and eligibility for services
+metrics: []
+
+### A-sanctuary-centers-housing-coordinator-39 | single-source
+canonical: Collaborated with the VA and other veterans services on behalf of Veteran clients
+metrics: []
+
+### A-sanctuary-centers-housing-coordinator-40 | single-source
+canonical: Collaborated on the sharing of VA client information with general SUD and social services programs
+metrics: []
 
 ## ucsb-research-assistant
 employer: UC Santa Barbara
