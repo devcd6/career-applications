@@ -53,6 +53,23 @@ class ApplySkillFlow(unittest.TestCase):
         self.assertIn("scripts/check_keywords.py", COMMANDS["analyze-jd"])
         self.assertIn("check_scope.py", COMMANDS["check"])
 
+    def test_manual_copy_fallback_until_adr_accepted(self):
+        flow = section(SKILL, "Two-gate flow")
+        self.assertRegex(flow, r"(?i)copies? .*application-facts\.md")
+        self.assertIn("ADR 0001", flow)
+
+    def test_step_two_does_not_contradict_phrase_ranking(self):
+        self.assertNotIn("Do not run claim ranking", SKILL)
+        self.assertIn("Do not rank claims", SKILL)
+
+    def test_handoff_written_only_after_checks_pass(self):
+        flow = section(SKILL, "Two-gate flow")
+        self.assertRegex(flow, r"(?i)handoff\.md`? only after every check passes")
+
+    def test_research_command_is_research_only(self):
+        self.assertNotIn("keywords.txt", COMMANDS["research"])
+        self.assertNotIn("Packet request", COMMANDS["research"])
+
     def test_tailor_command_has_no_rank_md_and_stops_for_plan(self):
         self.assertNotIn("rank.md", COMMANDS["tailor"])
         self.assertIn("plan.md", COMMANDS["tailor"])

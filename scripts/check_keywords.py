@@ -88,10 +88,12 @@ def diagnose(m, jd_raw, phrase):
         return f"punctuation differs (apostrophe, parentheses or similar); the JD says \"{found}\""
     words = phrase_norm.split()
     if words and len(words[-1]) >= 4:
-        stem = words[-1].rstrip("s") if words[-1].endswith("s") else words[-1]
-        hit = raw_find(jd_raw, words[:-1] + [stem], tail=INFLECTION + "?")
-        if hit:
-            return f"JD uses a different form; the JD says \"{hit}\""
+        last = words[-1]
+        stems = [last] + [last[:-n] for n in (1, 2) if last.endswith("s" if n == 1 else "es") and len(last) - n >= 3]
+        for stem in stems:
+            hit = raw_find(jd_raw, words[:-1] + [stem], tail=INFLECTION + "?")
+            if hit:
+                return f"JD uses a different form; the JD says \"{hit}\""
     if len(compact(phrase)) >= 6 and compact(phrase) in compact(jd_raw):
         return "hyphen or spacing differs; the JD writes the words differently"
     return "not found in the JD"
@@ -105,7 +107,9 @@ def read_phrases(m, kw_path):
         if phrase and phrase not in phrases:
             phrases.append(phrase)
         body = line.split("|", 1)[-1] if "|" in line else line
-        if "#" in body and body.split("#", 1)[0].strip():
+        # '#' glued to the preceding text (C#) is a phrase the matcher would cut short;
+        # '#' after whitespace is an ordinary comment
+        if not line.lstrip().startswith("#") and re.search(r"\S#", body):
             truncated.append(body.strip())
     return phrases, truncated
 

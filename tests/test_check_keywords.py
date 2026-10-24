@@ -142,5 +142,27 @@ class ReviewFixes(unittest.TestCase):
         self.assertIn("1 of 2 phrases", r.stdout)
 
 
+class ReviewFixes(unittest.TestCase):
+    def test_inline_comment_after_whitespace_is_not_a_failure(self):
+        r = run("Hard Skill | reports  # core duty\n")
+        self.assertEqual(r.returncode, 0, r.stdout)
+
+    def test_comment_only_line_with_pipe_and_hash_is_ignored(self):
+        r = run("# note: A | B # c\nHard Skill | reports\n")
+        self.assertEqual(r.returncode, 0, r.stdout)
+
+    def test_hash_inside_a_word_still_reported(self):
+        r = run("Hard Skill | C#\n", jd="We use C and C++ daily.\n")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("C#", r.stdout)
+
+    def test_double_s_word_names_the_jd_form(self):
+        jd = "You will handle case processing and business operations.\n"
+        r = run("Hard Skill | case process\n", jd=jd)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("different form", r.stdout)
+        self.assertIn("case processing", r.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()

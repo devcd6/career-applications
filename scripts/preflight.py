@@ -39,6 +39,13 @@ STEPS = [
 ]
 SLUG_RE = re.compile(r"^\d{4}-\d{2}-\d{2}_[^_]+_.+")
 ARTIFACTS = [name for _, files in STEPS for name in files]
+# An artifact written well before the files it depends on is stale: the step is redone.
+# Fresh checkouts write files within milliseconds, so only a clear gap counts.
+DEPENDS_ON = {
+    "spec.json": ["plan.md"],
+    "handoff.md": ["resume.md", "claims-used.md", "cover-letter.md"],
+}
+STALE_AFTER = 2.0
 
 NEXT_TEXT = {
     "add-jd": "save the job description as jd.md (step 1 input)",
@@ -65,6 +72,17 @@ def present(folder, name):
         return False
 
 
+def stale_files(folder, have):
+    out = []
+    for name, deps in DEPENDS_ON.items():
+        if not have[name]:
+            continue
+        mine = (folder / name).stat().st_mtime
+        if any(have[d] and (folder / d).stat().st_mtime - mine > STALE_AFTER for d in deps):
+            out.append(name)
+    return out
+
+
 def next_step(have):
     for step, files in STEPS:
         if not all(have[f] for f in files):
@@ -73,11 +91,13 @@ def next_step(have):
 
 
 def same_employer(folder):
+    """Sibling folders for the same employer as (name, same_role) pairs, sorted by name."""
     folder = folder.resolve()
     parts = folder.name.split("_")
     if len(parts) < 3 or not folder.parent.is_dir():
         return []
-    return sorted(p.name for p in folder.parent.iterdir()
+    return sorted((p.name, p.name.split("_", 2)[2:] == parts[2:])
+                  for p in folder.parent.iterdir()
                   if p.is_dir() and p.name != folder.name and p.name.split("_")[1:2] == [parts[1]])
 
 
@@ -111,6 +131,9 @@ def main():
     folder = Path(a.folder)
     slug = folder.resolve().name
     have = {name: present(folder, name) for name in ARTIFACTS}
+    stale = stale_files(folder, have)
+    for name in stale:
+        have[name] = False
     step = next_step(have)
 
     print(f"application: {slug}")
@@ -118,10 +141,14 @@ def main():
         print("warning: folder name is not YYYY-MM-DD_org_role")
     if not folder.is_dir():
         print("folder: missing (counts as empty)")
-    for other in same_employer(folder):
-        print(f"same employer: {other} (tell the owner before starting a second version)")
+    for other, same_role in same_employer(folder):
+        if same_role:
+            print(f"same opening: {other} (tell the owner before starting a second version)")
+        else:
+            print(f"same employer: {other}")
     for name in ARTIFACTS:
-        print(f"{name:22} {'present' if have[name] else 'missing'}")
+        state = "stale" if name in stale else "present" if have[name] else "missing"
+        print(f"{name:22} {state}" + (" (older than the files it depends on; redo)" if name in stale else ""))
     print(f"next: {step}  {NEXT_TEXT[step]}")
 
     if step == "packet":
@@ -137,6 +164,9 @@ def main():
         print(f"  session: {session}")
         print(f"  write-to: applications/{slug}/application-facts.md")
         print(f"  deliver-to: branch {branch}")
+        if "unknown" in (repository(folder), branch):
+            print("warning: repo or branch unknown; rerun with --branch or fix the checkout "
+                  "before the owner runs this request")
     return 0
 
 

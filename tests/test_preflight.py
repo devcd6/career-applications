@@ -149,11 +149,20 @@ class Details(unittest.TestCase):
             self.assertRegex(r.stdout, r"jd\.md\s+present")
             self.assertRegex(r.stdout, r"research\.md\s+missing")
 
-    def test_existing_folder_for_same_employer_is_flagged(self):
+    def test_existing_folder_for_same_opening_is_flagged(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            build(tmp, ["jd.md"], slug="2026-09-01_example-org_education-coordinator")
+            r = run(Path(tmp) / "applications" / SLUG)
+            self.assertIn("same opening: 2026-09-01_example-org_education-coordinator", r.stdout)
+            self.assertIn("tell the owner", r.stdout)
+
+    def test_other_role_at_same_employer_is_information_only(self):
         with tempfile.TemporaryDirectory() as tmp:
             build(tmp, ["jd.md"], slug="2026-09-01_example-org_older-role")
             r = run(Path(tmp) / "applications" / SLUG)
             self.assertIn("2026-09-01_example-org_older-role", r.stdout)
+            self.assertNotIn("tell the owner", r.stdout)
+            self.assertNotIn("same opening", r.stdout)
 
     def test_other_employers_are_not_flagged(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -224,6 +233,54 @@ class ReviewFixes(unittest.TestCase):
     def test_well_formed_slug_has_no_warning(self):
         with tempfile.TemporaryDirectory() as tmp:
             r = run(build(tmp, ["jd.md"]))
+            self.assertNotIn("warning", r.stdout)
+
+
+FULL = ["jd.md", "research.md", "keywords.txt", "application-facts.md", "keywords.md", "match.md",
+        "plan.md", "spec.json", "resume.md", "claims-used.md", "cover-letter.md", "handoff.md"]
+
+
+def age(folder, name, seconds):
+    p = folder / name
+    t = p.stat().st_mtime - seconds
+    os.utime(p, (t, t))
+
+
+class Staleness(unittest.TestCase):
+    def test_spec_older_than_plan_needs_reapproval(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = build(tmp, FULL)
+            age(folder, "spec.json", 60)
+            r = run(folder)
+            self.assertEqual(next_step(r.stdout), "plan-approval")
+            self.assertIn("stale", r.stdout)
+
+    def test_handoff_older_than_resume_or_letter_needs_check(self):
+        for newer in ("resume.md", "cover-letter.md"):
+            with tempfile.TemporaryDirectory() as tmp:
+                folder = build(tmp, FULL)
+                age(folder, "handoff.md", 60)
+                age(folder, "resume.md" if newer != "resume.md" else "cover-letter.md", 120)
+                r = run(folder)
+                self.assertEqual(next_step(r.stdout), "check", newer)
+
+    def test_files_written_together_are_not_stale(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertEqual(next_step(run(build(tmp, FULL)).stdout), "done")
+
+
+class UnresolvedDestination(unittest.TestCase):
+    def test_unknown_repo_or_branch_is_flagged_in_the_packet_request(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r = run(build(tmp, ["jd.md", "research.md", "keywords.txt"]))
+            self.assertIn("warning: repo or branch unknown", r.stdout)
+
+    def test_known_destination_has_no_warning(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            git(tmp, "init", "-q", "-b", "claude/x")
+            git(tmp, "remote", "add", "origin", "https://github.com/example-owner/example-repo.git")
+            git(tmp, "commit", "-q", "--allow-empty", "-m", "x")
+            r = run(build(tmp, ["jd.md", "research.md", "keywords.txt"]))
             self.assertNotIn("warning", r.stdout)
 
 
