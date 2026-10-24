@@ -72,6 +72,7 @@ class ApplySkillFlow(unittest.TestCase):
         self.assertRegex(git, r"(?i)push(es)? .*designated branch")
         self.assertIn("applications/<slug>/", git)
         self.assertRegex(git, r"(?i)never force-push")
+        self.assertRegex(git, r"(?i)non-fast-forward.*pull --no-rebase")
 
     def test_single_pr_found_by_head_branch(self):
         git = section(SKILL, "Commits and PR")

@@ -26,7 +26,7 @@ Commit and push after each step, and open one PR per application at the first pu
 Run these after each completed step of the Two-gate flow, including the Packet request stop and the Gate 2 stop, so work survives a session ending.
 
 1. **Commit.** One commit per completed step, staging only `applications/<slug>/` (never `git add -A`). Check `git status` first and leave anything outside the folder alone. Never amend, and never force-push.
-2. **Push.** Push to the designated branch with `git push -u origin <branch>`. Retry only on network errors (2s, 4s, 8s, 16s).
+2. **Push.** Push to the designated branch with `git push -u origin <branch>`. `career-pkm` pushes the Packet to this same branch, so if the push is rejected as non-fast-forward, `git pull --no-rebase origin <branch>` and push again. Retry network errors only (2s, 4s, 8s, 16s).
 3. **Find the PR by head branch.** Call `list_pull_requests` on `devcd6/career-applications` with the head branch (`devcd6:<branch>`) and state open. Open it only if none exists, as ready for review (not a draft), against `main`. Later steps reuse it; a re-run runs this lookup again and never opens a second PR, whether the branch is new or already pushed.
 4. **Subscribe once.** After opening the PR, or on finding it in a session that has not subscribed yet, call `subscribe_pr_activity`. The call is idempotent; do not repeat it in later steps of the same session.
 
