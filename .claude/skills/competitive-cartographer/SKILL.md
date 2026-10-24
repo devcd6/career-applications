@@ -17,12 +17,12 @@ metadata:
     - differentiation
 ---
 
-> **Project override (career-pkm). Takes precedence over everything below.**
+> **Project override (career-applications). Takes precedence over everything below.**
 >
 > - Facts about the owner come only from the imported `application-facts.md`. Never invent, inflate, round, estimate, or merge facts. Numbers are copied exactly from packet metrics.
-> - Do not add skills, tools, credentials, scope or outcomes the KB lacks. Where the job asks for something the KB does not show, state it as a real gap and ask the owner. Frame gaps in the cover letter, never with resume overreach.
+> - Do not add skills, tools, credentials, scope or outcomes the Packet lacks. Where the job asks for something the Packet does not show, state it as a real gap and ask the owner. Frame gaps in the cover letter, never with resume overreach.
 > - Write output only under `applications/<YYYY-MM-DD>_<org>_<role>/`. Treat `application-facts.md` as read-only. New facts go to `proposals.md` in that folder for owner review in `career-pkm`.
-> - Web search or fetch may use only the employer and role named in the job description. Never send resume or KB text to any external tool.
+> - Web search or fetch may use only the employer and role named in the job description. Never send resume or Packet text to any external tool.
 > - Notion is the application tracker only. It is not a fact source, and never offer to edit it.
 > - No em dashes in narrative prose. Follow `applications/preferences.md` and `writing/style-guide.md`.
 > - Generic examples, placeholder numbers and sample names in this skill are illustrative only. They are not the owner's facts.

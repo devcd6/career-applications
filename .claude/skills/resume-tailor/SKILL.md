@@ -5,11 +5,11 @@ description: >
 license: MIT + Commons Clause
 metadata:
   version: 2.0.0
-  author: borghei (original); slimmed for career-pkm
+  author: borghei (original); slimmed for career-applications
   python-tools: exact_phrase_matcher.py
 ---
 
-# Resume Tailor (career-pkm)
+# Resume Tailor (career-applications)
 
 Original generic body replaced; see git history. This is step 3 of the `apply` skill.
 
@@ -24,7 +24,7 @@ Original generic body replaced; see git history. This is step 3 of the `apply` s
 
 ## Steps
 
-1. Check `applications/` and `INDEX.md` for an existing version for the same employer.
+1. Check `applications/` for an existing folder for the same employer.
 2. Save the JD as `jd.md` and the exact JD phrases as `keywords.txt` (one per line).
 3. Run `python .claude/skills/resume-tailor/scripts/exact_phrase_matcher.py --jd jd.md --resume resume.md --phrases keywords.txt` (add `--json`; `--jd jd.md --suggest 30` lists candidate phrases). Omit `--resume` for JD-only counts before a packet exists. Matching is exact, case-insensitive, whole word. The result is phrase coverage, never a fit score.
 4. Choose claims that map to the role or make the owner stand out, within the per-role ranges. Pick the more conservative bracket option and a unique starting verb per role.

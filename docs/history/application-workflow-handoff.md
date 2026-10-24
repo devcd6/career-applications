@@ -1,3 +1,5 @@
+> **SUPERSEDED (2026-10-24).** This describes the original single-repo, KB-based workflow. It refers to files and sections that no longer exist here (an "Application mode" section in CLAUDE.md, `build_claims_view.py`, `.claude/agents`, `applications/_tools/`, mattpocock skills). The current flow is in `.claude/skills/apply/SKILL.md` and `docs/adr/0001-packet-delivery-by-push.md`.
+
 # HANDOFF: Build the application workflow in career-pkm
 
 Status (2026-10-10): scaffold built and merged to main. This file stays as the design record; current rules are in CLAUDE.md "Application mode".

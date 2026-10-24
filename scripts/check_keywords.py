@@ -10,7 +10,10 @@ curly apostrophes and en dashes normalized), so a phrase that passes here is cou
 the matcher. Every unmatched phrase is reported with its likely cause: hyphen versus space,
 punctuation (an apostrophe or parentheses), or an inflected form in the JD.
 
-Exit 0 when every phrase is found, 1 when any is not, 2 on a missing or empty input.
+Also checks the category caps (Business Context 10, Domain Keyword 5) and warns when a
+Forced or Hard Filter phrase appears in a JD line that calls it preferred, a plus or nice to have.
+
+Exit 0 when every phrase is found and no cap is exceeded, 1 when any is not, 2 on a missing or empty input.
 """
 import argparse
 import importlib.util
@@ -114,6 +117,36 @@ def read_phrases(m, kw_path):
     return phrases, truncated
 
 
+CAPS = {"Business Context": 10, "Domain Keyword": 5}
+PREFERRED_RE = re.compile(r"\b(?:strongly\s+)?preferred\b|\bnice[- ]to[- ]have\b|\ba plus\b|\bdesired\b|\bbonus\b", re.I)
+
+
+def category_counts(m, kw_path):
+    counts = {}
+    for line in kw_path.read_text(encoding="utf-8").splitlines():
+        cat, phrase = m.parse_line(line)
+        if phrase:
+            counts[cat] = counts.get(cat, 0) + 1
+    return counts
+
+
+def preferred_conflicts(m, jd_raw, kw_path):
+    """Forced or Hard Filter phrases whose JD line (or its section heading) says preferred."""
+    lines = jd_raw.splitlines()
+    out = []
+    for line in kw_path.read_text(encoding="utf-8").splitlines():
+        cat, phrase = m.parse_line(line)
+        if not phrase or cat not in ("Forced", "Hard Filter"):
+            continue
+        for i, text in enumerate(lines):
+            if m.count(phrase, m.norm(text)):
+                heading = next((l for l in reversed(lines[:i]) if re.match(r"\s*(?:#+|\*\*|[A-Z][A-Za-z ]+:\s*$)", l)), "")
+                if PREFERRED_RE.search(text) or PREFERRED_RE.search(heading):
+                    out.append((cat, phrase, text.strip()[:90]))
+                break
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("folder", nargs="?", help="application folder holding jd.md and keywords.txt")
@@ -149,9 +182,15 @@ def main():
         print(f"NOT FOUND  {p}  ({diagnose(m, jd_raw, p)})")
     for t in truncated:
         print(f"NOT FOUND  {t}  ('#' starts a comment in keyword files, so this phrase is cut short)")
-    failures = len(bad) + len(truncated)
+    counts = category_counts(m, kw_path)
+    capped = [(c, n, CAPS[c]) for c, n in counts.items() if c in CAPS and n > CAPS[c]]
+    for c, n, cap in capped:
+        print(f"OVER CAP  {c}: {n} phrases, maximum {cap}")
+    for cat, phrase, text in preferred_conflicts(m, jd_raw, kw_path):
+        print(f"WARN  {cat} phrase '{phrase}' sits in a preferred line: \"{text}\"")
+    failures = len(bad) + len(truncated) + len(capped)
     if failures:
-        print(f"{failures} of {len(phrases)} phrases not found in the JD's exact wording")
+        print(f"{failures} problem(s) in {len(phrases)} phrases (not found in the JD's exact wording, or over a category cap)")
         return 1
     print(f"ok: all {len(phrases)} phrases found in the JD")
     return 0

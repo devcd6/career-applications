@@ -164,18 +164,6 @@ def coverage(kws, text):
     return by
 
 
-def kb_corpus():
-    parts = []
-    for rel in ("kb/skills.md", "kb/education.md", "kb/summaries.md"):
-        f = ROOT / rel
-        if f.exists():
-            parts.append(f.read_text(encoding="utf-8"))
-    d = ROOT / "kb" / "roles"
-    if d.exists():
-        parts += [f.read_text(encoding="utf-8") for f in sorted(d.glob("*.md"))]
-    return norm(" ".join(parts))
-
-
 def split_items(text):
     items, depth, cur = [], 0, ""
     for ch in text:
@@ -386,7 +374,7 @@ def main():
                     warns.append(f"{r1} / {r2} similar bullets ({j:.2f}): {b1[:60]}...")
 
         # summary and skills terms not in the KB
-        corpus = kb_corpus()
+        corpus = norm(claims_path.read_text(encoding="utf-8"))
         if corpus:
             skey = next((n for n in order if "skill" in n.lower()), None)
             terms = skill_terms(sections[skey]) if skey else []
@@ -403,7 +391,7 @@ def main():
                     if core not in corpus:
                         miss.append(t)
             if miss:
-                warns.append(f"{len(miss)} summary/skills term(s) not found in kb/skills.md, education.md, summaries.md or kb/roles/: "
+                warns.append(f"{len(miss)} summary/skills term(s) not found in the Packet (selected summaries, skills, education and claims): "
                              + "; ".join(miss[:25]) + (" ..." if len(miss) > 25 else "") + " (owner review)")
 
         # keyword coverage

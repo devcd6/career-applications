@@ -65,12 +65,6 @@ Santa Barbara, CA  2022
 """
 
 
-def load_claims():
-    view = (ROOT / "kb/_views/claims.md").read_text()
-    return {m.group(1): {"tier": m.group(2), "canon": m.group(3)}
-            for m in re.finditer(r"### (A-[\w-]+) \| (\S+)\ncanonical: (.*)\n", view)}
-
-
 def resolve(canon, pick):
     """Resolve bracket groups: verb options are chosen, value alternatives are dropped."""
     out, last, gi = [], 0, 0
@@ -188,7 +182,7 @@ def render_packet_tail(education, skills):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("folder")
-    ap.add_argument("--claims", type=Path, help="packet or legacy claims view (default: <folder>/application-facts.md)")
+    ap.add_argument("--claims", type=Path, help="application-facts packet (default: <folder>/application-facts.md)")
     ap.add_argument("--check", action="store_true", help="validate the spec, write nothing")
     args = ap.parse_args()
     folder = Path(args.folder)
@@ -196,8 +190,6 @@ def main():
     claims_path = args.claims or folder / "application-facts.md"
     if not claims_path.exists() and (folder / "claims-packet.md").exists():
         claims_path = folder / "claims-packet.md"
-    if not claims_path.exists() and (ROOT / "kb" / "_views" / "claims.md").exists():
-        claims_path = ROOT / "kb" / "_views" / "claims.md"
     if not claims_path.exists():
         print(f"ERROR application-facts packet not found: {claims_path}")
         return 2

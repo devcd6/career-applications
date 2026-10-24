@@ -164,5 +164,25 @@ class ReviewFixes(unittest.TestCase):
         self.assertIn("case processing", r.stdout)
 
 
+class Caps(unittest.TestCase):
+    def test_business_context_over_ten_fails(self):
+        words = "reports correspondence Prepare Responding Education Coordinator Associate continuing education technical issues".split()
+        r = run("".join(f"Business Context | {w}\n" for w in words))
+        self.assertEqual(r.returncode, 1, r.stdout)
+        self.assertIn("OVER CAP", r.stdout)
+
+    def test_ten_business_context_phrases_pass(self):
+        words = "reports correspondence Prepare Responding Education Coordinator Associate continuing technical issues".split()
+        r = run("".join(f"Business Context | {w}\n" for w in words))
+        self.assertEqual(r.returncode, 0, r.stdout)
+
+    def test_preferred_line_warns_for_hard_filter(self):
+        jd = "Preferred Qualifications:\n- Associate degree in a related field\n"
+        r = run("Hard Filter | Associate degree\n", jd=jd)
+        self.assertEqual(r.returncode, 0, r.stdout)
+        self.assertIn("WARN", r.stdout)
+        self.assertIn("preferred", r.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()
