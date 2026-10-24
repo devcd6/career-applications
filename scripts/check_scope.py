@@ -1,24 +1,51 @@
 #!/usr/bin/env python3
-"""Check that an application branch changed only what it may.
+"""Check that a branch changed only what its kind of work may change.
 
 Usage: python scripts/check_scope.py [base]    (default base: origin/main)
 
-Allowed without approval: applications/**.
-Root paths (kb/, writing/samples/, INDEX.md) are allowed only as additions and only when
-kb/_user_decisions.md gained lines in the same diff (the user's approval entry).
-Always an error: any change under _raw/, any other root path, and deleted or edited lines
-in kb/ or writing/ (existing claims are never edited). Generated files are exempt from the
-deletion rule: INDEX.md, kb/_views/claims.md.
+Two kinds of change, never mixed in one branch:
+  application  every changed path is under applications/<slug>/ for one slug.
+  tooling      every changed path is under .claude/, .github/, docs/, scripts/, tests/ or is
+               one of README.md, CLAUDE.md, CONTEXT.md; applications/ is untouched.
+Always an error: applications/preferences.md, applications/profile-insights.md and writing/
+(owner-maintained sources), career-pkm material (kb/, _raw/, resumes/, INDEX.md), and any other
+root path.
 """
 import subprocess
 import sys
 
-GENERATED = {"INDEX.md", "kb/_views/claims.md"}
-ROOT_OK = ("kb/", "writing/samples/")
+TOOLING_DIRS = (".claude/", ".github/", "docs/", "scripts/", "tests/")
+TOOLING_FILES = {"README.md", "CLAUDE.md", "CONTEXT.md"}
+OWNER_FILES = {"applications/preferences.md", "applications/profile-insights.md"}
+FORBIDDEN_DIRS = ("writing/", "kb/", "_raw/", "resumes/")
 
 
-def git(*a):
-    return subprocess.run(["git", *a], capture_output=True, text=True, check=True).stdout
+def classify(paths):
+    """Return (kind, errors) for a list of changed paths."""
+    errors, slugs, tooling = [], set(), []
+    for path in paths:
+        if path in OWNER_FILES or path.startswith(FORBIDDEN_DIRS) or path == "INDEX.md":
+            errors.append(f"owner-maintained or career-pkm path: {path}")
+        elif path.startswith("applications/"):
+            parts = path.split("/")
+            if len(parts) < 3:
+                errors.append(f"file directly under applications/: {path}")
+            else:
+                slugs.add(parts[1])
+        elif path.startswith(TOOLING_DIRS) or path in TOOLING_FILES:
+            tooling.append(path)
+        else:
+            errors.append(f"path outside allowed scope: {path}")
+    if slugs and tooling:
+        errors.append("application and tooling changes in one branch: " + ", ".join(tooling[:3]))
+    if len(slugs) > 1:
+        errors.append("more than one application folder changed: " + ", ".join(sorted(slugs)))
+    kind = "tooling" if tooling and not slugs else "application" if slugs else "empty"
+    return kind, errors
+
+
+def git(*args):
+    return subprocess.run(["git", *args], capture_output=True, text=True, check=True).stdout
 
 
 def main():
@@ -29,26 +56,11 @@ def main():
         if subprocess.run(["git", "rev-parse", "--verify", "-q", base], capture_output=True).returncode:
             print(f"ERROR cannot resolve base {base}")
             return 2
-    rows = [l.split("\t") for l in git("diff", "--numstat", f"{base}...HEAD").splitlines()]
-    errors, root = [], []
-    for add, dele, path in rows:
-        if path.startswith("applications/"):
-            continue
-        if path.startswith("_raw/"):
-            errors.append(f"_raw is read-only: {path}")
-        elif path in GENERATED or path.startswith(ROOT_OK):
-            root.append(path)
-            if path not in GENERATED and dele not in ("0", "-"):
-                errors.append(f"existing lines edited or deleted ({dele}): {path}")
-        else:
-            errors.append(f"path outside allowed scope: {path}")
-    if root:
-        approved = any(p == "kb/_user_decisions.md" and a not in ("0", "-") for a, _, p in rows)
-        if not approved:
-            errors.append("root additions without an approval entry added to kb/_user_decisions.md: " + ", ".join(root))
-    for e in errors:
-        print("ERROR", e)
-    print("scope check:", "FAILED" if errors else "ok", f"({len(rows)} files, {len(root)} root)")
+    paths = [line for line in git("diff", "--name-only", f"{base}...HEAD").splitlines() if line]
+    kind, errors = classify(paths)
+    for error in errors:
+        print("ERROR", error)
+    print("scope check:", "FAILED" if errors else "ok", f"({len(paths)} files, {kind})")
     return 1 if errors else 0
 
 
