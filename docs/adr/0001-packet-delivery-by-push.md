@@ -1,3 +1,7 @@
+---
+status: proposed
+---
+
 # Packet delivery by push
 
 `career-pkm` pushes each Packet to the Opening's branch in this repository, after the owner approves the Selection proposal, instead of the owner copying the file by hand. This keeps the full knowledge base out of application sessions and removes a manual relay from every application.
@@ -10,6 +14,6 @@
 
 ## Consequences
 
-- Rule 8 in `career-pkm` must name this push as the approved outbound path. Until it does, the push is not allowed.
+- Rule 8 in `career-pkm` must name this push as the approved outbound path. Until it does, the push is not allowed and this ADR stays proposed. Mark it accepted in the same change that edits rule 8.
 - Only the Packet is written to this repository. Commit, PR and issue text from the push carry claim IDs and paths, never resume or knowledge-base text.
 - The application session reads only the Packet for career facts, as before.

@@ -35,7 +35,9 @@ class JdOnlyMode(unittest.TestCase):
 
     def test_jd_only_has_no_resume_column(self):
         r = run("--jd", "jd.md", "--phrases", "kw.txt", files={"jd.md": JD, "kw.txt": PHRASES})
-        self.assertNotIn("resume", r.stdout)
+        header = [l for l in r.stdout.splitlines() if l.startswith("category")]
+        self.assertEqual(len(header), 1)
+        self.assertEqual(header[0].split()[-1], "jd")
 
     def test_jd_only_still_flags_phrases_not_in_jd(self):
         r = run("--jd", "jd.md", "--phrases", "kw.txt", files={"jd.md": JD, "kw.txt": PHRASES})

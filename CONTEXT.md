@@ -13,8 +13,8 @@ The single folder that holds every artifact for one Opening, named by date, empl
 _Avoid_: project, workspace, case
 
 **Packet**:
-The owner-selected set of career claims, summary, skills and credentials, with source IDs, that is the only source of personal career facts for one Opening.
-_Avoid_: facts file, KB export, profile
+The owner-selected set of career claims, summary, skills and credentials, with source IDs, that is the only source of personal career facts for one Opening. It is stored as `application-facts.md` in the Application folder.
+_Avoid_: KB export, profile
 
 **Packet request**:
 A fact-free message that tells the owner how to get a Packet for an Opening: which Opening, which public files to read, which command to run, and where to deliver the result.
