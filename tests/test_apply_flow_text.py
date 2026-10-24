@@ -66,6 +66,38 @@ class ApplySkillFlow(unittest.TestCase):
         flow = section(SKILL, "Two-gate flow")
         self.assertRegex(flow, r"(?i)handoff\.md`? only after every check passes")
 
+    def test_each_step_commits_and_pushes_to_designated_branch(self):
+        git = section(SKILL, "Commits and PR")
+        self.assertRegex(git, r"(?i)one commit per (completed )?step")
+        self.assertRegex(git, r"(?i)push(es)? .*designated branch")
+        self.assertIn("applications/<slug>/", git)
+        self.assertRegex(git, r"(?i)never force-push")
+
+    def test_single_pr_found_by_head_branch(self):
+        git = section(SKILL, "Commits and PR")
+        self.assertRegex(git, r"(?i)list_pull_requests")
+        self.assertRegex(git, r"(?i)head branch")
+        self.assertRegex(git, r"(?i)open (it )?only if (none|no)")
+        self.assertRegex(git, r"(?i)ready for review")
+        self.assertRegex(git, r"(?i)later steps? reuse")
+
+    def test_subscribes_once_per_pr(self):
+        git = section(SKILL, "Commits and PR")
+        self.assertIn("subscribe_pr_activity", git)
+        self.assertRegex(git, r"(?i)once")
+        self.assertRegex(git, r"(?i)re-run.*(does not|never).*(second|another|duplicate)")
+
+    def test_commit_and_pr_text_carry_no_career_facts(self):
+        git = section(SKILL, "Commits and PR")
+        self.assertRegex(git, r"(?i)claim IDs and paths only")
+        self.assertRegex(git, r"(?i)never .*(resume|packet|KB) text")
+        self.assertIn("Commit message", git)
+        self.assertIn("PR body", git)
+
+    def test_two_gate_flow_points_to_commit_section(self):
+        flow = section(SKILL, "Two-gate flow")
+        self.assertIn("Commits and PR", flow)
+
     def test_research_command_is_research_only(self):
         self.assertNotIn("keywords.txt", COMMANDS["research"])
         self.assertNotIn("Packet request", COMMANDS["research"])

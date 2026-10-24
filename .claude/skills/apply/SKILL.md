@@ -19,7 +19,22 @@ Start every run, and every re-run, with `python scripts/preflight.py application
 4. **One pass after approval.** Run steps 3 to 5 (build, cover letter, `application-answers.md` if the owner requested it, `/check`, redacted handoff) without further owner prompts. Write `handoff.md` only after every check passes; its presence marks the checks as done. A failed check stops the run: report it, and never weaken the check or work around it. An eligibility question or a degree-field question also stops the run and goes to the owner. New or missing facts go to `proposals.md` and the run continues.
 5. **Review.** The owner reviews the finished set once before submitting.
 
-Commit and push after each step. Open one PR per application at the first push and subscribe to it; before opening, look for an open PR from the application branch and reuse it.
+Commit and push after each step, and open one PR per application at the first push; see Commits and PR.
+
+## Commits and PR
+
+Run these after each completed step of the Two-gate flow, including the Packet request stop and the Gate 2 stop, so work survives a session ending.
+
+1. **Commit.** One commit per completed step, staging only `applications/<slug>/` (never `git add -A`). Check `git status` first and leave anything outside the folder alone. Never amend, and never force-push.
+2. **Push.** Push to the designated branch with `git push -u origin <branch>`. Retry only on network errors (2s, 4s, 8s, 16s).
+3. **Find the PR by head branch.** Call `list_pull_requests` on `devcd6/career-applications` with the head branch (`devcd6:<branch>`) and state open. Open it only if none exists, as ready for review (not a draft), against `main`. Later steps reuse it; a re-run runs this lookup again and never opens a second PR, whether the branch is new or already pushed.
+4. **Subscribe once.** After opening the PR, or on finding it in a session that has not subscribed yet, call `subscribe_pr_activity`. The call is idempotent; do not repeat it in later steps of the same session.
+
+Text rules for commits and the PR: claim IDs and paths only. Never put resume, packet or KB text, or the owner's name in a commit message, PR title, PR body or comment.
+
+- Commit message: `<step>: <slug>` plus a body of file paths and claim IDs, for example `research: 2026-10-23_hjf_education-coordinator` and `applications/<slug>/research.md`. End with the attribution lines the session was given.
+- PR title: `Application: <slug>`.
+- PR body: the slug, the Opening's org and role as written in the folder name, a checklist of steps with the file paths they wrote, and the plan's claim IDs once `plan.md` exists. Update the checklist on the existing PR with `update_pull_request` instead of commenting each step.
 
 ## Steps
 
