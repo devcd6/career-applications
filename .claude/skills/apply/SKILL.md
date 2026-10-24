@@ -7,11 +7,40 @@ description: Run the five-step application workflow using the job description an
 
 Orchestrates one application. Read `CLAUDE.md`, `applications/preferences.md`, and `writing/style-guide.md`; use only the application's `application-facts.md` for career facts. This repository has no full career KB. The owner imports the packet produced in `career-pkm`.
 
-Slug: `applications/<YYYY-MM-DD>_<org>_<role>/` (lowercase, hyphens). Before starting, look in `applications/` and `INDEX.md` for an existing version for the same employer and tell the owner. Every step saves its file and also prints to chat. Stop between steps when the owner wants to review, and ask rather than assume.
+Slug: `applications/<YYYY-MM-DD>_<org>_<role>/` (lowercase, hyphens). Before starting, look in `applications/` and `INDEX.md` for an existing version for the same employer and tell the owner. Every step saves its file and also prints to chat. Ask rather than assume. The only stops are the ones listed under Two-gate flow.
+
+## Two-gate flow
+
+Start every run, and every re-run, with `python scripts/preflight.py applications/<slug>`. It reports each artifact as present or missing and names the first missing step on its `next:` line. Resume at that step; never redo a finished one, and never create a second folder for the same Opening.
+
+1. **Before the Packet.** Run steps 1 and 2a below (research, then `keywords.txt`). Validate `keywords.txt` with `python scripts/check_keywords.py applications/<slug>`; fix every unmatched phrase to the JD's exact wording before continuing. JD-only counts come from `exact_phrase_matcher.py --jd jd.md --phrases keywords.txt` (no `--resume`) and stay in chat.
+2. **Packet request.** When preflight says `next: packet`, stop and print its Packet request unchanged. Do not write `keywords.md` or `match.md` first: their packet counts and claim matches would need redoing. The owner runs `/build-packet <slug>` in `career-pkm` (Gate 1, selection approval). Until ADR 0001 is accepted, the owner copies the resulting `application-facts.md` into the Application folder by hand; once it is accepted, `career-pkm` pushes it to this branch. Either way, resume with `/apply <slug>` once the file exists.
+3. **After the Packet.** Run step 2b (rank with `--resume application-facts.md`, write `keywords.md` and `match.md`), then write `plan.md` and stop. **Gate 2:** owner approval of `plan.md` is the only gate before building. Do not write `spec.json` until it is given.
+4. **One pass after approval.** Run steps 3 to 5 (build, cover letter, `application-answers.md` if the owner requested it, `/check`, redacted handoff) without further owner prompts. Write `handoff.md` only after every check passes; its presence marks the checks as done. A failed check stops the run: report it, and never weaken the check or work around it. An eligibility question or a degree-field question also stops the run and goes to the owner. New or missing facts go to `proposals.md` and the run continues.
+5. **Review.** The owner reviews the finished set once before submitting.
+
+Commit and push after each step, and open one PR per application at the first push; see Commits and PR.
+
+## Commits and PR
+
+Run these after each completed step of the Two-gate flow, including the Packet request stop and the Gate 2 stop, so work survives a session ending.
+
+1. **Commit.** One commit per completed step, staging only `applications/<slug>/` (never `git add -A`). Check `git status` first and leave anything outside the folder alone. Never amend, and never force-push.
+2. **Push.** Push to the designated branch with `git push -u origin <branch>`. `career-pkm` pushes the Packet to this same branch, so if the push is rejected as non-fast-forward, `git pull --no-rebase origin <branch>` and push again. Retry network errors only (2s, 4s, 8s, 16s).
+3. **Find the PR by head branch.** Call `list_pull_requests` on `devcd6/career-applications` with the head branch (`devcd6:<branch>`) and state open. Open it only if none exists, as ready for review (not a draft), against `main`. Later steps reuse it; a re-run runs this lookup again and never opens a second PR, whether the branch is new or already pushed.
+4. **Subscribe once.** After opening the PR, or on finding it in a session that has not subscribed yet, call `subscribe_pr_activity`. The call is idempotent; do not repeat it in later steps of the same session.
+
+Text rules for commits and the PR: claim IDs and paths only. Never put resume, packet or KB text, or the owner's name in a commit message, PR title, PR body or comment.
+
+- Commit message: `<step>: <slug>` plus a body of file paths and claim IDs, for example `research: 2026-10-23_hjf_education-coordinator` and `applications/<slug>/research.md`. End with the attribution lines the session was given.
+- PR title: `Application: <slug>`.
+- PR body: the slug, the Opening's org and role as written in the folder name, a checklist of steps with the file paths they wrote, and the plan's claim IDs once `plan.md` exists. Update the checklist on the existing PR with `update_pull_request` instead of commenting each step.
+
+## Steps
 
 1. **/research** (`research.md`). Use `company-research` for a concise company snapshot, role context, language to mirror, source ledger, and unknowns. Web queries contain only employer, role, and relevant program names from the JD. Do not include career facts or interview notes. Tag every finding. Run `python scripts/check_research.py applications/<slug>`.
-2. **/analyze-jd** (`keywords.md`, `match.md`). Use `job-description-analyzer` with the exact-phrase rules in preferences. Save phrases to `keywords.txt`; report hard filters, real gaps, and open questions. Compare requirements only with the imported application-facts packet. Do not run claim ranking here; career-fact selection belongs in `career-pkm` before packet export.
-3. **/tailor** (`plan.md`, then `resume.md`, `claims-used.md`). Write `plan.md` with selected packet claim IDs, tier, bracket/verb choices, real gaps, and items for `proposals.md`. **Stop for owner approval before writing `spec.json` or running `build_application.py`.** Use the resume skills. Every bullet maps to a packet claim ID; role headings, dates, selected summary, education, credentials, publications, and skills come from the packet. The builder reads `application-facts.md` in the application folder. Print the resume in a Markdown code block.
+2. **/analyze-jd**. (a) Use the exact-phrase rules in preferences to save phrases to `keywords.txt`, then run `scripts/check_keywords.py`. (b) Once the Packet exists, use `job-description-analyzer` to rank phrases (not claims) with packet counts and write `keywords.md` and `match.md`; report hard filters, real gaps, and open questions. Compare requirements only with the imported application-facts packet. Do not rank claims; career-fact selection belongs in `career-pkm` before packet export.
+3. **/tailor** (`plan.md`, then `resume.md`, `claims-used.md`). Write `plan.md` with selected packet claim IDs, tier, bracket/verb choices, real gaps, and items for `proposals.md`. **Gate 2: stop for owner approval before writing `spec.json` or running `build_application.py`.** Use the resume skills. Every bullet maps to a packet claim ID; role headings, dates, selected summary, education, credentials, publications, and skills come from the packet. The builder reads `application-facts.md` in the application folder. Print the resume in a Markdown code block.
 4. **/cover-letter** (`cover-letter.md`). Use `cover-letter-generator` with `writing/style-guide.md` and the two closest samples in `writing/samples/`. Frame gaps honestly here. Numbers only from claim metrics.
 5. **/check**. Run `check_application.py`, `check_research.py`, the cover-letter detectors, and `check_scope.py`. Application changes stay under `applications/<slug>/`; this repository never writes to the career KB. Report failures without weakening checks. Write a redacted session handoff in the application folder and run `check_handoff.py`.
 

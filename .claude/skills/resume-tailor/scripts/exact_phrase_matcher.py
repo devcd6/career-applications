@@ -7,7 +7,11 @@ stemming, no synonyms and no overlap score.
 
 Usage:
     python exact_phrase_matcher.py --jd jd.txt --resume resume.md --phrases keywords.txt
+    python exact_phrase_matcher.py --jd jd.txt --phrases keywords.txt
     python exact_phrase_matcher.py --jd jd.txt --suggest 30
+
+Without --resume the matcher prints JD counts only (no resume column, no
+'missing from resume' flag). Supply --resume to add the resume or packet counts.
 
 keywords.txt: one phrase per line ('#' starts a comment). A line may carry a
 category: 'Hard Skill | data entry' (categories: Title Keyword, Hard Skill, Action
@@ -77,20 +81,28 @@ def main():
         for p, k in suggest(jd, a.suggest):
             print(f"{k:3d}  {p}")
         return 0
-    if not (a.resume and a.phrases):
-        ap.error("--resume and --phrases are required unless --suggest is used")
-    resume = norm(Path(a.resume).read_text(encoding="utf-8"))
+    if not a.phrases:
+        ap.error("--phrases is required unless --suggest is used")
+    resume = norm(Path(a.resume).read_text(encoding="utf-8")) if a.resume else None
     rows = []
     for line in Path(a.phrases).read_text(encoding="utf-8").splitlines():
         cat, ph = parse_line(line)
         if ph:
-            rows.append({"category": cat, "phrase": ph, "in_jd": count(ph, jd), "in_resume": count(ph, resume)})
+            row = {"category": cat, "phrase": ph, "in_jd": count(ph, jd)}
+            if resume is not None:
+                row["in_resume"] = count(ph, resume)
+            rows.append(row)
     if a.json:
         print(json.dumps(rows, indent=2))
         return 0
     for r in rows:
         if r["in_jd"] == 0:
             print(f"NOT IN JD  {r['phrase']}")
+    if resume is None:
+        print(f"{'category':18} {'phrase':40} jd")
+        for r in rows:
+            print(f"{r['category']:18} {r['phrase']:40} {r['in_jd']}")
+        return 0
     print(f"{'category':18} {'phrase':40} jd  resume")
     for r in rows:
         flag = "" if r["in_resume"] else "  <- missing from resume"
