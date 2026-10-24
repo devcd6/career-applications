@@ -29,9 +29,36 @@ def load_matcher():
     return mod
 
 
+INFLECTION = r"(?:s|es|d|ed|ing|er|ers|ly)"
+
+
 def squash(text):
     """Lowercase text with apostrophes dropped and every other non-word run turned into a space."""
     return " ".join(re.sub(r"[^\w]+", " ", re.sub(r"['\u2019]", "", text.lower())).split())
+
+
+def compact(text):
+    return re.sub(r"[\W_]+", "", text.lower())
+
+
+def flexible(word):
+    """Regex for one word that tolerates curly apostrophes and en dashes."""
+    out = []
+    for ch in word:
+        if ch in "'\u2019":
+            out.append("['\u2019]")
+        elif ch in "-\u2013":
+            out.append("[-\u2013]")
+        else:
+            out.append(re.escape(ch))
+    return "".join(out)
+
+
+def raw_find(jd_raw, words, tail=""):
+    """The JD's own wording (original case and punctuation) for the given words, or None."""
+    pat = r"\s+".join(flexible(w) for w in words) + tail
+    m = re.search(r"(?<![\w])" + pat + r"(?![\w])", jd_raw, re.IGNORECASE)
+    return m.group(0) if m else None
 
 
 def excerpt(jd_raw, phrase):
@@ -53,23 +80,34 @@ def excerpt(jd_raw, phrase):
 
 def diagnose(m, jd_raw, phrase):
     jd_norm = m.norm(jd_raw)
-    spaced_jd = jd_norm.replace("-", " ")
-    spaced_phrase = phrase.replace("-", " ")
-    if "-" in jd_norm + phrase and m.count(spaced_phrase, spaced_jd):
+    phrase_norm = m.norm(phrase)
+    if ("-" in jd_norm or "-" in phrase_norm) and m.count(phrase_norm.replace("-", " "), jd_norm.replace("-", " ")):
         return "hyphen versus space; the JD wording differs from the keyword"
     found = excerpt(jd_raw, phrase)
     if found and squash(found) == squash(phrase):
         return f"punctuation differs (apostrophe, parentheses or similar); the JD says \"{found}\""
-    words = phrase.split()
-    if words:
-        head = r"\s+".join(re.escape(m.norm(w)) for w in words[:-1])
-        last = re.escape(m.norm(words[-1]).rstrip("s")) if len(words[-1]) > 3 else re.escape(m.norm(words[-1]))
-        pat = (head + r"\s+" if head else "") + last + r"\w*"
-        hit = re.search(r"(?<![\w])" + pat + r"(?![\w])", jd_norm)
+    words = phrase_norm.split()
+    if words and len(words[-1]) >= 4:
+        stem = words[-1].rstrip("s") if words[-1].endswith("s") else words[-1]
+        hit = raw_find(jd_raw, words[:-1] + [stem], tail=INFLECTION + "?")
         if hit:
-            raw = re.search(re.escape(hit.group(0)).replace(r"\ ", r"\s+"), jd_raw, re.IGNORECASE)
-            return f"JD uses a different form; the JD says \"{raw.group(0) if raw else hit.group(0)}\""
+            return f"JD uses a different form; the JD says \"{hit}\""
+    if len(compact(phrase)) >= 6 and compact(phrase) in compact(jd_raw):
+        return "hyphen or spacing differs; the JD writes the words differently"
     return "not found in the JD"
+
+
+def read_phrases(m, kw_path):
+    """Phrases as the matcher reads them, in order, without repeats. Also returns truncated lines."""
+    phrases, truncated = [], []
+    for line in kw_path.read_text(encoding="utf-8").splitlines():
+        phrase = m.parse_line(line)[1]
+        if phrase and phrase not in phrases:
+            phrases.append(phrase)
+        body = line.split("|", 1)[-1] if "|" in line else line
+        if "#" in body and body.split("#", 1)[0].strip():
+            truncated.append(body.strip())
+    return phrases, truncated
 
 
 def main():
@@ -90,20 +128,26 @@ def main():
             print(f"ERROR cannot read {path}")
             return 2
 
-    m = load_matcher()
-    jd_raw = jd_path.read_text(encoding="utf-8")
-    jd = m.norm(jd_raw)
-    phrases = [m.parse_line(line)[1] for line in kw_path.read_text(encoding="utf-8").splitlines()]
-    phrases = [p for p in phrases if p]
+    try:
+        m = load_matcher()
+        jd_raw = jd_path.read_text(encoding="utf-8")
+        phrases, truncated = read_phrases(m, kw_path)
+    except (OSError, UnicodeDecodeError, ImportError, AttributeError) as exc:
+        print(f"ERROR cannot read inputs: {exc}")
+        return 2
     if not phrases:
         print(f"ERROR no phrases in {kw_path}")
         return 2
 
+    jd = m.norm(jd_raw)
     bad = [p for p in phrases if m.count(p, jd) == 0]
     for p in bad:
         print(f"NOT FOUND  {p}  ({diagnose(m, jd_raw, p)})")
-    if bad:
-        print(f"{len(bad)} of {len(phrases)} phrases not found in the JD's exact wording")
+    for t in truncated:
+        print(f"NOT FOUND  {t}  ('#' starts a comment in keyword files, so this phrase is cut short)")
+    failures = len(bad) + len(truncated)
+    if failures:
+        print(f"{failures} of {len(phrases)} phrases not found in the JD's exact wording")
         return 1
     print(f"ok: all {len(phrases)} phrases found in the JD")
     return 0

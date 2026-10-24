@@ -96,5 +96,51 @@ class Validator(unittest.TestCase):
         self.assertEqual(r.returncode, 2)
 
 
+class ReviewFixes(unittest.TestCase):
+    def test_hash_in_a_phrase_is_reported_not_truncated(self):
+        r = run("Hard Skill | C#\n", jd="We use C and C++ daily.\n")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("C#", r.stdout)
+        self.assertIn("comment", r.stdout)
+
+    def test_unreadable_encoding_exits_two(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            (base / "jd.md").write_bytes(b"caf\xe9 and reports\n")
+            (base / "keywords.txt").write_text("Hard Skill | reports\n", encoding="utf-8")
+            r = subprocess.run([sys.executable, str(SCRIPT), str(base)], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 2, r.stdout + r.stderr)
+        self.assertNotIn("Traceback", r.stderr)
+
+    def test_short_last_word_is_not_called_an_inflection(self):
+        r = run("Hard Skill | HR\n", jd="Track hrs and items weekly.\n")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("not found in the JD", r.stdout)
+        self.assertNotIn("hrs", r.stdout)
+
+    def test_unrelated_longer_word_is_not_called_an_inflection(self):
+        r = run("Hard Skill | data\n", jd="Maintain the database daily.\n")
+        self.assertIn("not found in the JD", r.stdout)
+
+    def test_inflection_quotes_the_jd_with_its_original_case(self):
+        r = run("Action Keyword | respond\n", jd="Responding to donors.\n")
+        self.assertIn('"Responding"', r.stdout)
+
+    def test_en_dash_in_keyword_still_gets_hyphen_diagnosis(self):
+        r = run("Hard Skill | trouble\u2013shoot\n", jd="Trouble shoot issues.\n")
+        self.assertIn("hyphen", r.stdout)
+
+    def test_closed_compound_is_diagnosed_as_spacing(self):
+        r = run("Hard Skill | troubleshoot\n", jd="Trouble-shoot issues.\n")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("hyphen or spacing", r.stdout)
+
+    def test_duplicate_phrases_are_counted_once(self):
+        r = run("Hard Skill | Salesforce\nDomain Keyword | Salesforce\nHard Skill | reports\n")
+        flagged = [l for l in r.stdout.splitlines() if l.startswith("NOT FOUND")]
+        self.assertEqual(len(flagged), 1)
+        self.assertIn("1 of 2 phrases", r.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()
