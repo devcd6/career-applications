@@ -26,7 +26,7 @@ Original generic body replaced; see git history. This is step 3 of the `apply` s
 
 1. Check `applications/` and `INDEX.md` for an existing version for the same employer.
 2. Save the JD as `jd.md` and the exact JD phrases as `keywords.txt` (one per line).
-3. Run `python .claude/skills/resume-tailor/scripts/exact_phrase_matcher.py --jd jd.md --resume resume.md --phrases keywords.txt` (add `--json`; `--jd jd.md --suggest 30` lists candidate phrases). Matching is exact, case-insensitive, whole word. The result is phrase coverage, never a fit score.
+3. Run `python .claude/skills/resume-tailor/scripts/exact_phrase_matcher.py --jd jd.md --resume resume.md --phrases keywords.txt` (add `--json`; `--jd jd.md --suggest 30` lists candidate phrases). Omit `--resume` for JD-only counts before a packet exists. Matching is exact, case-insensitive, whole word. The result is phrase coverage, never a fit score.
 4. Choose claims that map to the role or make the owner stand out, within the per-role ranges. Pick the more conservative bracket option and a unique starting verb per role.
 5. Write `spec.json` with the selected summary ID and packet claim numbers, then run `python scripts/build_application.py applications/<slug>`; it writes `resume.md` and `claims-used.md` from `application-facts.md`.
 6. Re-screen each bullet as listed in preferences, then run `python scripts/check_application.py applications/<slug>`.
