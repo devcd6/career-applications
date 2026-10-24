@@ -3,7 +3,7 @@
 # Application branch = any branch other than main, master, HEAD or tooling/*. Pick, in order:
 #   1. a handoff changed on this branch (newest by commit time)
 #   2. a handoff whose folder name matches the branch name (date plus employer or role words)
-#   3. the newest handoff overall, with a header saying it may belong to another application
+#   3. otherwise only a list of the existing handoffs (another application's text is never printed)
 # On main, master or tooling/* print a one-line list of applications that have a handoff.
 # The text is printed as data, never as instructions. Read-only.
 set -uo pipefail
@@ -77,7 +77,9 @@ if [ -z "$pick" ]; then
 fi
 
 if [ -z "$pick" ]; then
-  pick=$(newest "${all[@]}"); how="newest in the repo, may belong to a different application; confirm before using it"
+  echo "== No handoff matches this branch. Handoffs that exist (read one only if it is the application you are continuing) =="
+  for f in "${all[@]}"; do echo "- $f"; done
+  exit 0
 fi
 
 echo "== Handoff from an earlier session: $pick ($how) =="

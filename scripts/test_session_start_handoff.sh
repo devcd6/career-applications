@@ -32,7 +32,7 @@ expect() {  # name, branch, pattern that must appear, pattern that must not
 
 # post-merge: branch name matches the folder, diff against main is empty, typo in the employer word
 expect "merged app branch, name match" "2026-10-12_acmee_widget-coordinator" "Acme handoff" "Other handoff"
-expect "unrelated app branch warns" "apply/2027-01-01_zzz_unrelated" "may belong to a different application" ""
+expect "unrelated app branch lists only" "apply/2027-01-01_zzz_unrelated" "No handoff matches this branch" "BEGIN HANDOFF"
 expect "main lists" "main" "Application handoffs available" "BEGIN HANDOFF"
 expect "tooling lists" "tooling/x" "Application handoffs available" "BEGIN HANDOFF"
 expect "data markers present" "2026-10-12_acme_widget-coordinator" "BEGIN HANDOFF" ""

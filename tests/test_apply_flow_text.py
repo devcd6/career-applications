@@ -53,9 +53,9 @@ class ApplySkillFlow(unittest.TestCase):
         self.assertIn("scripts/check_keywords.py", COMMANDS["analyze-jd"])
         self.assertIn("check_scope.py", COMMANDS["check"])
 
-    def test_manual_copy_fallback_until_adr_accepted(self):
+    def test_packet_delivery_by_push_with_manual_copy(self):
         flow = section(SKILL, "Two-gate flow")
-        self.assertRegex(flow, r"(?i)copies? .*application-facts\.md")
+        self.assertRegex(flow, r"(?i)(copies?|copy) .*application-facts\.md|application-facts\.md.*(pushes|copy)")
         self.assertIn("ADR 0001", flow)
 
     def test_step_two_does_not_contradict_phrase_ranking(self):

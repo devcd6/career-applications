@@ -3,7 +3,7 @@ name: resume-bullet-writer
 description: Strengthen resume bullets using only selected facts and numbers from an application-facts packet.
 ---
 
-# Resume Bullet Writer (career-pkm)
+# Resume Bullet Writer (career-applications)
 
 Original generic body replaced; see git history.
 

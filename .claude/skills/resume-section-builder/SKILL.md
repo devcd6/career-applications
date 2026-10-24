@@ -1,9 +1,9 @@
 ---
 name: resume-section-builder
-description: Build the summary and skills sections of a career-pkm resume from KB sources, tailored to a target role
+description: Build the summary and skills sections of an application resume from the Packet, tailored to a target role
 ---
 
-# Resume Section Builder (career-pkm)
+# Resume Section Builder (career-applications)
 
 Original generic body replaced; see git history.
 
