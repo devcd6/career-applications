@@ -12,19 +12,33 @@ next: values, in workflow order:
   add-jd, research, keywords, packet, analyze, plan, plan-approval, build, cover-letter,
   check, done
 
-At "packet" the output also carries a Packet request: slug, folder, the two public files the
-career-pkm session reads, the command to run there, this session's ID and the branch to push to.
+At "packet" the output also carries a Packet request: slug, folder, repository, the two public
+files the career-pkm session reads, the command to run there, this session's ID, the file to
+write and the branch to push it to. Branch and repository read "unknown" when git cannot say
+(no remote, detached HEAD).
 """
 import argparse
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
 
-ARTIFACTS = [
-    "jd.md", "research.md", "keywords.txt", "application-facts.md", "keywords.md", "match.md",
-    "plan.md", "spec.json", "resume.md", "claims-used.md", "cover-letter.md", "handoff.md",
+# (step, files that must exist before the workflow moves past it), in workflow order
+STEPS = [
+    ("add-jd", ["jd.md"]),
+    ("research", ["research.md"]),
+    ("keywords", ["keywords.txt"]),
+    ("packet", ["application-facts.md"]),
+    ("analyze", ["keywords.md", "match.md"]),
+    ("plan", ["plan.md"]),
+    ("plan-approval", ["spec.json"]),
+    ("build", ["resume.md", "claims-used.md"]),
+    ("cover-letter", ["cover-letter.md"]),
+    ("check", ["handoff.md"]),
 ]
+SLUG_RE = re.compile(r"^\d{4}-\d{2}-\d{2}_[^_]+_.+")
+ARTIFACTS = [name for _, files in STEPS for name in files]
 
 NEXT_TEXT = {
     "add-jd": "save the job description as jd.md (step 1 input)",
@@ -43,29 +57,23 @@ NEXT_TEXT = {
 
 def present(folder, name):
     p = folder / name
-    return p.is_file() and p.stat().st_size > 0
+    if not p.is_file():
+        return False
+    try:
+        return bool(p.read_text(encoding="utf-8", errors="replace").strip())
+    except OSError:
+        return False
 
 
 def next_step(have):
-    order = [
-        ("add-jd", "jd.md"), ("research", "research.md"), ("keywords", "keywords.txt"),
-        ("packet", "application-facts.md"), ("analyze", None), ("plan", "plan.md"),
-        ("plan-approval", "spec.json"), ("build", None), ("cover-letter", "cover-letter.md"),
-        ("check", "handoff.md"),
-    ]
-    for step, needs in order:
-        if step == "analyze":
-            if not (have["keywords.md"] and have["match.md"]):
-                return step
-        elif step == "build":
-            if not (have["resume.md"] and have["claims-used.md"]):
-                return step
-        elif not have[needs]:
+    for step, files in STEPS:
+        if not all(have[f] for f in files):
             return step
     return "done"
 
 
 def same_employer(folder):
+    folder = folder.resolve()
     parts = folder.name.split("_")
     if len(parts) < 3 or not folder.parent.is_dir():
         return []
@@ -73,14 +81,24 @@ def same_employer(folder):
                   if p.is_dir() and p.name != folder.name and p.name.split("_")[1:2] == [parts[1]])
 
 
-def current_branch(folder):
+def git_out(folder, *args):
+    cwd = folder if folder.is_dir() else folder.parent
     try:
-        cwd = folder if folder.is_dir() else folder.parent
-        out = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=cwd,
-                             capture_output=True, text=True)
-        return out.stdout.strip() if out.returncode == 0 and out.stdout.strip() else "unknown"
+        out = subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True)
     except OSError:
-        return "unknown"
+        return ""
+    return out.stdout.strip() if out.returncode == 0 else ""
+
+
+def current_branch(folder):
+    branch = git_out(folder, "rev-parse", "--abbrev-ref", "HEAD")
+    return branch if branch and branch != "HEAD" else "unknown"
+
+
+def repository(folder):
+    url = git_out(folder, "config", "--get", "remote.origin.url")
+    m = re.search(r"github\.com[:/]([^/\s]+/[^/\s]+?)(?:\.git)?/?$", url)
+    return m.group(1) if m else "unknown"
 
 
 def main():
@@ -91,11 +109,13 @@ def main():
     a = ap.parse_args()
 
     folder = Path(a.folder)
-    slug = folder.name
+    slug = folder.resolve().name
     have = {name: present(folder, name) for name in ARTIFACTS}
     step = next_step(have)
 
     print(f"application: {slug}")
+    if not SLUG_RE.match(slug):
+        print("warning: folder name is not YYYY-MM-DD_org_role")
     if not folder.is_dir():
         print("folder: missing (counts as empty)")
     for other in same_employer(folder):
@@ -111,9 +131,11 @@ def main():
         print("Packet request")
         print(f"  slug: {slug}")
         print(f"  folder: {folder.as_posix()}")
+        print(f"  repo: {repository(folder)}")
         print("  read: jd.md, keywords.txt (public JD text only)")
         print(f"  command: /build-packet {slug}")
         print(f"  session: {session}")
+        print(f"  write-to: applications/{slug}/application-facts.md")
         print(f"  deliver-to: branch {branch}")
     return 0
 

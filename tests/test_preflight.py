@@ -162,5 +162,70 @@ class Details(unittest.TestCase):
             self.assertNotIn("different-org", r.stdout)
 
 
+def git(cwd, *args):
+    subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True,
+                   env={**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@example.com",
+                        "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@example.com"})
+
+
+class ReviewFixes(unittest.TestCase):
+    def packet_state(self, tmp):
+        return build(tmp, ["jd.md", "research.md", "keywords.txt"])
+
+    def test_packet_request_names_the_destination_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r = run(self.packet_state(tmp), "--branch", "b")
+            self.assertIn(f"write-to: applications/{SLUG}/application-facts.md", r.stdout)
+
+    def test_packet_request_names_the_repository_from_the_git_remote(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            git(tmp, "init", "-q", "-b", "main")
+            git(tmp, "remote", "add", "origin", "https://github.com/example-owner/example-repo.git")
+            r = run(self.packet_state(tmp), "--branch", "b")
+            self.assertIn("repo: example-owner/example-repo", r.stdout)
+
+    def test_repository_is_unknown_without_a_remote(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r = run(self.packet_state(tmp), "--branch", "b")
+            self.assertIn("repo: unknown", r.stdout)
+
+    def test_branch_defaults_to_the_checked_out_branch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            git(tmp, "init", "-q", "-b", "claude/example-branch")
+            git(tmp, "commit", "-q", "--allow-empty", "-m", "x")
+            r = run(self.packet_state(tmp))
+            self.assertIn("deliver-to: branch claude/example-branch", r.stdout)
+
+    def test_detached_head_is_reported_as_unknown_not_head(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            git(tmp, "init", "-q", "-b", "main")
+            git(tmp, "commit", "-q", "--allow-empty", "-m", "x")
+            git(tmp, "checkout", "-q", "--detach")
+            r = run(self.packet_state(tmp))
+            self.assertIn("deliver-to: branch unknown", r.stdout)
+
+    def test_whitespace_only_file_counts_as_missing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = build(tmp, [])
+            (folder / "jd.md").write_text("\n  \n", encoding="utf-8")
+            self.assertEqual(next_step(run(folder).stdout), "add-jd")
+
+    def test_dot_argument_uses_the_real_folder_name(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = build(tmp, ["jd.md"])
+            r = subprocess.run([sys.executable, str(SCRIPT), "."], cwd=folder, capture_output=True, text=True)
+            self.assertIn(f"application: {SLUG}", r.stdout)
+
+    def test_slug_that_does_not_match_the_pattern_gets_a_warning(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r = run(build(tmp, ["jd.md"], slug="hjf-education-coordinator"))
+            self.assertIn("warning: folder name is not YYYY-MM-DD_org_role", r.stdout)
+
+    def test_well_formed_slug_has_no_warning(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r = run(build(tmp, ["jd.md"]))
+            self.assertNotIn("warning", r.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()
